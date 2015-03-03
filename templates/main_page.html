@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}主页{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="location">
+        <img src="">
+        <span class="location-word">{{ user.location }}</span>
+        <span class="choose-location-btn btn">[切换学校]</span>
+    </div>
+    <div class="nav">
+        <div class="goods-kind-list">
+            <div class="all-kind">全部分类</div>
+            <ul>
+                {% for kind in kinds %}
+                <li>
+                    <div class="kind">
+                        {{ kind }}
+                        <img class="arrow">
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="banner">
+        </div>
+    </div>
+    <div class="hot-goods">
+        <div><img src="">热销商品</div>
+        <ul class="hot-goods-list">
+            {% for good in hot_goods %}
+            <li class="hot-good-wrapper">
+                <div class="hot-good-container">
+                    {{ good }}
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

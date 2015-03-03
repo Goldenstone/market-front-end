@@ -1,0 +1,75 @@
+@import "main";
+
+@root-font-color: #575757;
+
+* {
+    font-family: "Microsoft YaHei" Arial;
+    margin: 0;
+    padding: 0;
+    color: @root-font-color;
+}
+
+ul {list-style: none;}
+a {text-decoration: none;}
+
+#content {
+    min-height: 500px;
+    margin: 20px 0;
+}
+
+.container {
+    width: 1000px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.btn {
+    cursor: pointer;
+}
+
+#header {
+    background-color: #f9f9f9;
+    height: 58px;
+    .right {
+        float: right;
+        height: 12px;
+        margin-top: 23px;
+        line-height: 12px;
+        color: #515151;
+        .separator {color: #d5d8d7; margin: 0 20px;}
+        .login_state {
+            .logout-btn {
+                margin-left: 20px;
+                color: #999;
+            }
+            .entry-cart-btn .amount {
+                color: #ff7802;
+            }
+        }
+    }
+    .left {
+        float: left;
+        height: 44px;
+        width: 44px;
+        margin-top: 7px;
+        border-radius: 50%;
+        background-color: #514b46;
+        img {width: 100%;}
+    }
+}
+
+#footer {
+    background-color: #edebe6;
+    height: 100px;
+    color: #7f9491;
+    text-align: center;
+    .top {
+        font-size: 14px;
+        padding-top: 33px;
+        span.separator {margin: 0 20px;}
+    }
+    .bottom {
+        font-size: 10px;
+        margin-top: 21px;
+    }
+}
