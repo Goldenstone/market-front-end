@@ -1,9 +1,11 @@
 jquery = require("jquery")
+utils = require("./utils.coffee")
 
-# $loginBtn = jquery(".login-btn")
+$ = utils.$
 # $logoutBtn = jquery(".logout-btn")
 # $entryCartBtn = jquery(".entry-cart-btn")
-$mask = jquery(".mask")
+$$state = jquery(".state")
+$$mask = jquery(".mask")
 
 common = 
     url: "#{location.protocol}//#{location.host}"

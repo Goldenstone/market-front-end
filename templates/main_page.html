@@ -6,7 +6,7 @@
 <div class="container">
     <div class="location">
         <img src="">
-        <span class="location-word">{{ location }}</span>
+        <span class="location-word">{{ user.location }}</span>
         <span class="choose-location-btn btn">[切换学校]</span>
     </div>
     <div class="nav">
@@ -18,6 +18,12 @@
                     <div class="kind">
                         {{ cat1.name }}
                         <img class="arrow">
+                    </div>
+                    <div class="cat2s">
+                        <ul>
+                            {% for cat2 in cat1.cat2s %}
+                            <li>{{ cat2.name }}</li>
+                        </ul>
                     </div>
                 </li>
                 {% endfor %}
