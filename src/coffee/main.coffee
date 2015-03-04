@@ -13,6 +13,7 @@ window.onload = ->
 
 initChooseLocationBtn = ->
     $chooseLocationBtn.click ->
+        common.showMask()
         $locationsBox.show()
 
 initLocations = ->
@@ -25,4 +26,5 @@ initLocations = ->
                 building_id: building_id
             success: (data)->
                 $locationWord.text(building_name)
-                $locations.hide()
+                common.hideMask()
+                $locationsBox.hide()

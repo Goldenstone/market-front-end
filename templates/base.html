@@ -11,20 +11,20 @@
     <div id="header">
         <div class="container">
             <div class="right">
-                {% if user.is_login %}
+                <!-- {% if user.is_login %} -->
                 <div class="login_state">
                     <span class="username">{{user.name}}</span>
                     <span class="logout-btn btn">退出</span>
                     <span class="separator">|</span>
-                    <a href="#" class="entry-cart-btn btn"><img src="">购物车<b class="amount">{{ user.shopping_cart_amount }}</b></a>
+                    <a href="#" class="entry-cart-btn btn"><img src="">购物车<b class="amount">{{ cart_quantity }}</b></a>
                 </div>
-                {% else %}
+                <!-- {% else %}
                 <div class="logout_state">
                     <span class="login-btn btn">登录</span>
                     <span class="separator">|</span>
                     <span class="register-btn btn">注册</span>
                 </div>
-                {% endif %}
+                {% endif %} -->
             </div>
             <div class="left">
                 <img src="">
@@ -33,6 +33,8 @@
     </div>
 
     <div id="content">{% block content %}{% endblock %}</div>
+
+    <div class="mask"></div>
 
     <div id="footer">
         <div class="top">

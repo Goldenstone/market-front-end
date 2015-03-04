@@ -6,23 +6,7 @@ app.debug = True
 
 @app.route('/')
 def main_page():
-    user = {
-        'is_login': True,
-        'name': 'user0',
-        'location': 'sysu zhishanyuan 2',
-        'shopping_cart_amount': 10
-    }
-    kinds = ['kind1', 'kind2', 'kind3']
-    hot_goods = [
-        'hot good 1',
-        'hot good 2',
-        'hot good 3',
-        'hot good 4',
-        'hot good 5',
-        'hot good 6',
-    ]
-    return render_template('main_page.html', user = user,\
-        kinds = kinds, hot_goods = hot_goods)
+    return render_template('main_page.html')
 
 @app.route('/goods_list')
 def goods_list_page():

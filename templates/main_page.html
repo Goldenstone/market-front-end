@@ -6,17 +6,17 @@
 <div class="container">
     <div class="location">
         <img src="">
-        <span class="location-word">{{ user.location }}</span>
+        <span class="location-word">{{ location }}</span>
         <span class="choose-location-btn btn">[切换学校]</span>
     </div>
     <div class="nav">
         <div class="goods-kind-list">
             <div class="all-kind">全部分类</div>
             <ul>
-                {% for kind in kinds %}
+                {% for cat1 in cat1s %}
                 <li>
                     <div class="kind">
-                        {{ kind }}
+                        {{ cat1.name }}
                         <img class="arrow">
                     </div>
                 </li>
@@ -39,5 +39,9 @@
             {% endfor %}
         </ul>
     </div>
+</div>
+
+<div class="locations-box">
+    
 </div>
 {% endblock %}
