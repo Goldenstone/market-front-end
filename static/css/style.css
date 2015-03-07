@@ -67,6 +67,15 @@ a {
   min-height: 500px;
   margin: 20px 0;
 }
+.mask {
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+}
 .container {
   width: 1000px;
   overflow: hidden;
@@ -79,25 +88,25 @@ a {
   background-color: #f9f9f9;
   height: 58px;
 }
-#header .right {
+#header .state {
   float: right;
   height: 12px;
   margin-top: 23px;
   line-height: 12px;
   color: #515151;
 }
-#header .right .separator {
+#header .state .separator {
   color: #d5d8d7;
   margin: 0 20px;
 }
-#header .right .login_state .logout-btn {
+#header .state .logout-btn {
   margin-left: 20px;
   color: #999;
 }
-#header .right .login_state .entry-cart-btn .amount {
+#header .state .entry-cart-btn .amount {
   color: #ff7802;
 }
-#header .left {
+#header .brand {
   float: left;
   height: 44px;
   width: 44px;
@@ -105,7 +114,7 @@ a {
   border-radius: 50%;
   background-color: #514b46;
 }
-#header .left img {
+#header .brand img {
   width: 100%;
 }
 #footer {

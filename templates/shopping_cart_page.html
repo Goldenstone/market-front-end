@@ -1,1 +1,58 @@
 {% extends "base.html" %}
+
+{% block title %}购物车{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="top-bar">
+        <div class="left">
+            <img src="">
+            <span class="top-bar-word">购物车</span>
+        </div>
+        <div class="right">
+            已选商品：￥<span class="price">0.00</span>
+            <a href="" class="settle-btn btn">结算</a>
+        </div>
+    </div>
+    <div class="goods-list-container">
+        <div class="goods-list">
+            <ul>
+                <li class="goods-list-header">
+                    <span><input type="checkbox">全选</span>
+                    <span>商品信息</span>
+                    <span>单价（元）</span>
+                    <span>数量</span>
+                    <span>价格（元）</span>
+                </li>
+                {% for good in goods_list %}
+                <li>
+                    {% if good.is_null %}
+                    <span>已失效</span>
+                    {% else %}
+                    <span><input type="checkbox"></span>
+                    {% endif %}
+                    <span><img src="">{{ good.img_url }}</span>
+                    <span>{{ good.name }}</span>
+                    <span>{{ good.price }}</span>
+                    <span>
+                        <a class="reduce-btn">-</a>
+                        {{ good.quantity }}
+                        <a class="add-btn">+</a>
+                    </span>
+                    <span>￥{{ good.price * good.quantity }}</span>
+                    <span class="remove-btn">删除</span>
+                </li>
+                {% endfor %}
+                <li class="goods-list-footer">
+                    <span><input type="checkbox">全选</span>
+                    <span>全部删除</span>
+                    <span>清除失效商品</span>
+                    <span>已选商品<b>0</b>件</span>
+                    <span>合计：￥<b>0</b></span>
+                    <span>结算</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

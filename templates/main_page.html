@@ -13,16 +13,17 @@
         <div class="goods-kind-list">
             <div class="all-kind">全部分类</div>
             <ul>
-                {% for cat1 in cat1s %}
+                {% for cat in catx %}
                 <li>
                     <div class="kind">
-                        {{ cat1.name }}
+                        {{ cat[0].name }}
                         <img class="arrow">
                     </div>
                     <div class="cat2s">
                         <ul>
-                            {% for cat2 in cat1.cat2s %}
+                            {% for cat2 in cat[1] %}
                             <li>{{ cat2.name }}</li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </li>
@@ -39,7 +40,22 @@
             {% for good in hot_goods %}
             <li class="hot-good-wrapper">
                 <div class="hot-good-container">
-                    {{ good }}
+                    <p>{{ good[0].name }}</p>
+                    <img src="{{good[0].pic_url}}">
+                    <p>{{ good[0].price }}</p>
+                    <div class="interact-area">
+                        <div>
+                            <p>超出库存</p>
+                            <span>1</span>
+                            <a>+</a>
+                            <a>-</a>
+                        </div>
+                        {% if good[2] %}
+                        <div class="add-goods-to-cart-btn btn">加入购物车</div>
+                        {% else %}
+                        <div class="disabled-btn">已售罄</div>
+                        {% endif %}
+                    </div>
                 </div>
             </li>
             {% endfor %}
@@ -48,6 +64,15 @@
 </div>
 
 <div class="locations-box">
-    
+    <ul>
+        {% for loc in locations %}
+        <li sid="{{ loc[0].id }}">
+            <p>{{ loc[0].name }}</p>
+            {% for building in loc[1] %}
+            <span class="location" bid="{{ building.id }}">{{ building.name }}</span>
+            {% endfor %}
+        </li>
+        {% endfor %}
+    </ul>
 </div>
 {% endblock %}
