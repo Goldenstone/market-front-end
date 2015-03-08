@@ -26,7 +26,7 @@ module.exports = (grunt) ->
                     b.transform(stringify({extensions: [".hbs", ".html", ".tpl", ".txt"]}))
                 expand: true
                 flatten: true
-                src: ["src/coffee/main.coffee"]
+                src: ["src/coffee/*.coffee"]
                 dest: "static/js"
                 ext: ".js"
 

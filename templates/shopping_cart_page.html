@@ -11,48 +11,57 @@
         </div>
         <div class="right">
             已选商品：￥<span class="price">0.00</span>
-            <a href="" class="settle-btn btn">结算</a>
+            <span class="settle-btn btn">结算</span>
         </div>
     </div>
     <div class="goods-list-container">
         <div class="goods-list">
-            <ul>
-                <li class="goods-list-header">
-                    <span><input type="checkbox">全选</span>
-                    <span>商品信息</span>
-                    <span>单价（元）</span>
-                    <span>数量</span>
-                    <span>价格（元）</span>
-                </li>
-                {% for good in goods_list %}
+            <div class="goods-list-header">
+                <span><input type="checkbox">全选</span>
+                <span>商品信息</span>
+                <span>单价（元）</span>
+                <span>数量</span>
+                <span>价格（元）</span>
+            </div>
+            <ul data-bind="foreach: cartObjs">
                 <li>
-                    {% if good.is_null %}
-                    <span>已失效</span>
-                    {% else %}
-                    <span><input type="checkbox"></span>
-                    {% endif %}
-                    <span><img src="">{{ good.img_url }}</span>
-                    <span>{{ good.name }}</span>
-                    <span>{{ good.price }}</span>
+                    <span data-bind="ifnot: is_valid">已失效</span>
+                    <span data-bind="if: is_valid, checked: is_checked"><input type="checkbox"></span>
+                    <span><img data-bind="attr: {src: filename}"></span>
+                    <span data-bind="text: name"></span>
+                    <span data-bind="text: price"></span>
                     <span>
-                        <a class="reduce-btn">-</a>
-                        {{ good.quantity }}
-                        <a class="add-btn">+</a>
+                        <a class="reduce-btn btn" data-bind="click: $data.reduce">-</a>
+                        <span data-bind="text: quantity"></span>
+                        <a class="add-btn btn" data-bind="click: $data.add">+</a>
                     </span>
-                    <span>￥{{ good.price * good.quantity }}</span>
-                    <span class="remove-btn">删除</span>
-                </li>
-                {% endfor %}
-                <li class="goods-list-footer">
-                    <span><input type="checkbox">全选</span>
-                    <span>全部删除</span>
-                    <span>清除失效商品</span>
-                    <span>已选商品<b>0</b>件</span>
-                    <span>合计：￥<b>0</b></span>
-                    <span>结算</span>
+                    <span data-bind="text: totalPrice"></span>
+                    <span class="remove-btn btn" data-bind="click: $data.removeSelf">删除</span>
+                    <div class="good-mask" data-bind="css: validStatus"></div>
                 </li>
             </ul>
+            <div class="goods-list-footer">
+                <span><input type="checkbox">全选</span>
+                <span>全部删除</span>
+                <span>清除失效商品</span>
+                <span>已选商品<b>0</b>件</span>
+                <span>合计：￥<b>0</b></span>
+                <span class="settle-btn btn">结算</span>
+            </div>
         </div>
     </div>
+
+    <div class="contact-info">
+        <form>
+            <p>姓名：<input data-bind="text: contactInfo.name" type="text"></p>
+            <p>联系方式：<input data-bind="text: contactInfo.phone" type="number"></p>
+            <p>地址：<input data-bind="text: contactInfo.addr" type="text"></p>
+        </form>
+        <span class="confirm-btn btn">确认</span>
+    </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{url_for('static', filename='js/cart.js')}}"></script>
 {% endblock %}

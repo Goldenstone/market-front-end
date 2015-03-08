@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+import json
 from flask import Flask
 from flask import render_template
+from flask import make_response 
 app = Flask(__name__)
 app.debug = True
 
@@ -60,27 +62,24 @@ def goods_list_page():
 
 @app.route('/shopping_cart')
 def shopping_cart_page():
-    goods_list = []
-    for i in range(6):
-        goods_list.append({
-            'is_null': False,
-            'pic_url': 'http://www.baidu.com/img/bdlogo.png',
-            'name': u'商品' + str(i),
-            'price': 99,
-            'quantity': 1
-        })
-    return render_template('shopping_cart_page.html', user = user,\
-        goods_list = goods_list)
+    return render_template('shopping_cart_page.html', user = user)
 
-# api
-@app.route('/location/school_list')
-def school_list_handler():
-    school_list = []
-    for i in range(5):
-        school_list.append({
-            'id': i,
-            'name': u'大学' + str(i)
+@app.route('/cart/goods', methods = ['POST'])
+def get_cart_objs():
+    cart_objs = []
+    for i in range(6):
+        flag = True
+        if i is 0:
+            flag = False
+        cart_objs.append({
+            'is_valid': flag,
+            'quantity': 1,
+            'product_id': i,
+            'name': u'商品' + str(i),
+            'filename': 'http://www.baidu.com/img/bdlogo.png',
+            'price': 99
         })
+    return make_response(json.dumps({'code': 0, 'data': cart_objs}))
 
 if __name__ == '__main__':
     app.run()

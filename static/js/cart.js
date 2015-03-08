@@ -14683,6 +14683,160 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
 })();
 
 },{}],3:[function(require,module,exports){
+var $confirmBtn, $contactInfo, $settleBtn, bindCartObjs, bindContactInfo, common, getCartObjs, getCheckedProductIds, getContactInfo, initBtns, injectProperties, jquery, ko, quantityHandler, vm;
+
+jquery = require("jquery");
+
+ko = require("knockout");
+
+common = require("./common.coffee");
+
+vm = {
+  contactInfo: {
+    name: ko.observable(""),
+    phone: ko.observable(""),
+    addr: ko.observable("")
+  }
+};
+
+$settleBtn = jquery(".settle-btn");
+
+$contactInfo = jquery(".contact-info");
+
+$confirmBtn = jquery(".confirm-btn");
+
+window.onload = function() {
+  common.init();
+  getCartObjs();
+  getContactInfo();
+  initBtns();
+  return console.log(vm);
+};
+
+getCartObjs = function() {
+  return jquery.ajax({
+    url: common.url + "/cart/goods",
+    type: "POST",
+    data: {
+      crsf_token: common.token
+    },
+    success: function(res) {
+      res = JSON.parse(res);
+      if (res.code === 0) {
+        return bindCartObjs(res.data);
+      }
+    }
+  });
+};
+
+getContactInfo = function() {
+  return jquery.ajax({
+    url: common.url + "/user/contact_info",
+    type: "POST",
+    data: {
+      csrf_token: common.token
+    },
+    success: function(res) {
+      res = JSON.parse(res);
+      if (res.code === 0) {
+        return bindContactInfo(res.data);
+      }
+    }
+  });
+};
+
+initBtns = function() {
+  $settleBtn.click(function() {
+    return $contactInfo.show();
+  });
+  return $confirmBtn.click(function() {
+    return jquery.ajax({
+      url: common.url + "/order/create",
+      type: "POST",
+      data: {
+        csrf_token: common.token,
+        product_ids: getCheckedProductIds(),
+        name: vm.contactInfo.name(),
+        phone: vm.contactInfo.phone(),
+        addr: vm.contactInfo.addr()
+      }
+    });
+  });
+};
+
+bindCartObjs = function(objs) {
+  var i, len, obj;
+  for (i = 0, len = objs.length; i < len; i++) {
+    obj = objs[i];
+    obj['is_checked'] = ko.observable(false);
+    obj['quantity'] = ko.observable(obj.quantity);
+    injectProperties(obj);
+  }
+  vm.cartObjs = ko.observableArray(objs);
+  return ko.applyBindings(vm);
+};
+
+injectProperties = function(obj) {
+  obj.validStatus = function() {
+    var ref;
+    return (ref = this.is_valid) != null ? ref : {
+      '': 'unvalid'
+    };
+  };
+  obj.removeSelf = function() {
+    return vm.cartObjs.remove(this);
+  };
+  obj.add = function() {
+    return this.quantityHandler('/cart/add');
+  };
+  obj.reduce = function() {
+    return this.quantityHandler('/cart/sub');
+  };
+  obj.quantityHandler = quantityHandler;
+  return obj.totalPrice = ko.pureComputed(function() {
+    return this.quantity() * this.price;
+  }, obj);
+};
+
+quantityHandler = function(suffix) {
+  return jquery.ajax({
+    url: common.url + suffix,
+    type: "POST",
+    data: {
+      csrf_token: common.token,
+      product_id: this.product_id
+    },
+    success: (function(_this) {
+      return function(res) {
+        res = JSON.parse(res);
+        if (res.code === 0) {
+          return _this.quantity(res.data);
+        }
+      };
+    })(this)
+  });
+};
+
+bindContactInfo = function(info) {
+  var i, len, prop, props, results;
+  props = ['name', 'phone', 'addr'];
+  results = [];
+  for (i = 0, len = props.length; i < len; i++) {
+    prop = props[i];
+    results.push(vm.contactInfo[prop](info[prop]));
+  }
+  return results;
+};
+
+getCheckedProductIds = function() {
+  return vm.cartObjs.filter(function(element) {
+    return element.is_checked === true;
+  });
+};
+
+
+
+},{"./common.coffee":4,"jquery":1,"knockout":2}],4:[function(require,module,exports){
 var $cartQuantity, $mask, $notification, common, initFooter, initHeader, jquery;
 
 jquery = require("jquery");
@@ -14740,104 +14894,4 @@ module.exports = common;
 
 
 
-},{"jquery":1}],4:[function(require,module,exports){
-var $chooseLocationBtn, $hotGoodsList, $locationWord, $locationsBox, common, initAddGoodsToCartBtn, initChooseLocationBtn, initLocations, jquery, knockout;
-
-jquery = require("jquery");
-
-knockout = require("knockout");
-
-common = require("./common.coffee");
-
-$locationWord = jquery(".location-word");
-
-$chooseLocationBtn = jquery(".choose-location-btn");
-
-$locationsBox = jquery(".locations-box");
-
-$hotGoodsList = jquery(".hot-goods-list");
-
-window.onload = function() {
-  common.init();
-  if (!common.token) {
-    $chooseLocationBtn.click();
-  }
-  initChooseLocationBtn();
-  initLocations();
-  return initAddGoodsToCartBtn();
-};
-
-initChooseLocationBtn = function() {
-  return $chooseLocationBtn.click(function() {
-    return $locationsBox.show();
-  });
-};
-
-initLocations = function() {
-  var strategy;
-  strategy = {
-    "0": "定位成功",
-    "1": "error: 无效的参数",
-    "-1": "error: 建筑物不存在"
-  };
-  return $locationsBox.click(function(e) {
-    var building_id, building_name;
-    if (e.target.className !== 'location') {
-      return;
-    }
-    building_name = null;
-    building_id = 0;
-    return jquery.ajax({
-      url: common.url + "/choose_location",
-      type: 'POST',
-      data: {
-        building_id: building_id
-      },
-      success: function(data) {
-        $locationWord.text(building_name);
-        $locationsBox.hide();
-        return common.notify(strategy[data.status]);
-      }
-    });
-  });
-};
-
-initAddGoodsToCartBtn = function() {
-  var strategy;
-  strategy = {
-    "0": "添加成功",
-    "1": "error: 无效的参数",
-    "2": "error: invalid token",
-    "3": "亲，请先选择学校楼栋喔",
-    "-1": "亲，请先清除购物车中的冲突商品喔",
-    "-2": "Oops!商品不存在"
-  };
-  return $hotGoodsList.click(function(e) {
-    var amount, good_id;
-    if (e.target.className !== 'add-goods-to-cart-btn') {
-      return;
-    }
-    good_id = 0;
-    amount = 1;
-    if (amount < 1) {
-      common.notify("数量要大于0喔！");
-      return;
-    }
-    return jquery.ajax({
-      url: common.url + "/cart/insert",
-      type: "POST",
-      data: {
-        csrf_token: common.token,
-        product_id: good_id,
-        quantity: amount
-      },
-      success: function(res) {
-        return common.notify(strategy[res.status]);
-      }
-    });
-  });
-};
-
-
-
-},{"./common.coffee":3,"jquery":1,"knockout":2}]},{},[4]);
+},{"jquery":1}]},{},[3]);

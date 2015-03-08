@@ -5,14 +5,15 @@ common = require("./common.coffee")
 $locationWord = jquery(".location-word")
 $chooseLocationBtn = jquery(".choose-location-btn")
 $locationsBox = jquery(".locations-box")
-$locations = jquery(".location")
-$addGoodsToCartBtn = jquery(".add-goods-to-cart-btn")
+$hotGoodsList = jquery(".hot-goods-list")
 
 window.onload = ->
     common.init()
     initChooseLocationBtn()
     initLocations()
     initAddGoodsToCartBtn()
+    if not common.token
+        $chooseLocationBtn.click()
 
 initChooseLocationBtn = ->
     $chooseLocationBtn.click ->
@@ -20,7 +21,13 @@ initChooseLocationBtn = ->
         $locationsBox.show()
 
 initLocations = ->
-    $locations.click (e)->
+    strategy = 
+        "0": "定位成功"
+        "1": "error: 无效的参数"
+        "-1": "error: 建筑物不存在"
+    $locationsBox.click (e)->
+        if e.target.className isnt 'location' then return
+        building_name = null # get name
         building_id = 0 # get building_id
         jquery.ajax
             url: common.url + "/choose_location"
@@ -31,6 +38,8 @@ initLocations = ->
                 $locationWord.text(building_name)
                 # common.hideMask()
                 $locationsBox.hide()
+                common.notify(strategy[data.status])
+
 
 initAddGoodsToCartBtn = ->
     strategy = 
@@ -40,7 +49,8 @@ initAddGoodsToCartBtn = ->
         "3": "亲，请先选择学校楼栋喔"
         "-1": "亲，请先清除购物车中的冲突商品喔"
         "-2": "Oops!商品不存在"
-    $addGoodsToCartBtn.click (e)->
+    $hotGoodsList.click (e)->
+        if e.target.className isnt 'add-goods-to-cart-btn' then return
         good_id = 0
         amount = 1
         if amount < 1

@@ -1,6 +1,6 @@
 jquery = require("jquery")
 
-$state = jquery(".state")
+# $state = jquery(".state")
 $cartQuantity = jquery(".state .amount")
 $mask = jquery(".mask")
 $notification = jquery(".notification")
@@ -18,11 +18,9 @@ common =
     hideMask: ->
         $mask.fadeOut()
     notify: (msg)->
-        @showMask()
         $notification.text(msg)
         $notification.fadeIn 400, =>
             $notification.fadeOut()
-            @hideMask()
 
 initHeader = ->
     jquery.ajax
