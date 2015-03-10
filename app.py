@@ -9,7 +9,6 @@ app.debug = True
 user = {
     'location': u'中山大学至善园1号',
     'name': u'张三',
-    'cart_quantity': 9
 }
 catx = []
 for i in range(7):
