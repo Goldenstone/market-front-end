@@ -7,8 +7,7 @@ module.exports = (grunt) ->
     grunt.initConfig
         clean:
             bin:
-                css: ["static/css"]
-                js: ["static/js"]
+                src: ["static/css", "static/js"]
             dist: ["dist"]
 
         watch:
@@ -32,23 +31,34 @@ module.exports = (grunt) ->
 
         less:
             compile:
-                files:
-                    "static/css/style.css": ["src/less/style.less"]
+                files: [{
+                    expand: true,
+                    cwd: "src/less",
+                    src: ["*.less", "!_*.less"],
+                    dest: "static/css",
+                    ext: ".css"
+                }]
+
 
         uglify:
             build:
                 files: [{
                     expand: true
-                    cwd: "static/js/"
-                    src: ["**/*.js"]
+                    cwd: "static/js"
+                    src: ["*.js"]
                     dest: "dist/js"
                     ext: ".min.js"
                 }]
 
         cssmin:
             build:
-                files:
-                    "dist/css/style.min.css": ["static/css/style.css"]
+                files: [{
+                    expand: true
+                    cwd: "static/css"
+                    src: ["*.css"]
+                    dest: "dist/css"
+                    ext: ".min.css"
+                }]
 
         copy:
             assets:

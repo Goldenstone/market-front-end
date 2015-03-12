@@ -1,5 +1,3 @@
-@import "main";
-
 @root-font-color: #575757;
 
 * {
@@ -37,16 +35,16 @@ a {text-decoration: none;}
     cursor: pointer;
 }
 
+.separator {color: #d5d8d7; margin: 0 20px;}
+
 #header {
     background-color: #f9f9f9;
     height: 58px;
     .state {
+        height: 58px;
         float: right;
-        height: 12px;
-        margin-top: 23px;
-        line-height: 12px;
+        line-height: 58px;
         color: #515151;
-        .separator {color: #d5d8d7; margin: 0 20px;}
         .logout-btn {margin-left: 20px; color: #999;}
         .entry-cart-btn .amount {color: #ff7802;}
     }
@@ -69,7 +67,6 @@ a {text-decoration: none;}
     .top {
         font-size: 14px;
         padding-top: 33px;
-        span.separator {margin: 0 20px;}
     }
     .bottom {
         font-size: 10px;
