@@ -98,7 +98,7 @@ module.exports = (grunt) ->
 
     grunt.registerTask "default",  ->
         grunt.task.run [
-            "clean:bin"
+            # "clean:bin"
             "browserify"
             "less"
             "watch"
