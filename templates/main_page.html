@@ -10,7 +10,7 @@
 <div class="container">
     <div class="location">
         <img src="{{ url_for('static', filename='images/address.png')}}" />
-        <span class="location-word">{{ user.location }}</span>
+        <span class="location-word" data-bind="text: location">{{ user.location }}</span>
         <span class="choose-location-btn btn">[切换学校]</span>
     </div>
     <div class="nav-banner">
@@ -60,7 +60,7 @@
                             </div>
                         </div>
                         {% if good[2] %}
-                        <div class="add-goods-to-cart-btn btn">加入购物车</div>
+                        <div class="add-goods-to-cart-btn btn" data-id="{{ good[0].id }}">加入购物车</div>
                         {% else %}
                         <div class="disabled-btn btn">已售罄</div>
                         {% endif %}
@@ -72,17 +72,31 @@
     </div>
 </div>
 
-<div class="locations-box">
-    <ul>
+{% endblock %}
+
+{% block mask %}
+<div class="schools-box">
+    <div class="locations-title">
+        请选择您的学校
+    </div>
+    <div class="locations-container">
         {% for loc in locations %}
-        <li sid="{{ loc[0].id }}">
-            <p>{{ loc[0].name }}</p>
-            {% for building in loc[1] %}
-            <span class="location" bid="{{ building.id }}">{{ building.name }}</span>
-            {% endfor %}
-        </li>
+        <div class="location-container">
+            <p class="school location-name" data-sid="{{ loc[0].id }}">{{ loc[0].name }}</p>
+        </div>
         {% endfor %}
-    </ul>
+    </div>
+</div>
+
+<div class="buildings-box">
+    <div class="locations-title">
+        请选择您的宿舍楼
+    </div>
+    <div class="locations-container" data-bind="foreach: buildings">
+        <div class="location-container">
+            <p class="building location-name" data-bind="data-bid: id, text: name"</p>
+        </div>
+    </div>
 </div>
 {% endblock %}
 

@@ -4,44 +4,79 @@ common = require("./common.coffee")
 
 $locationWord = jquery(".location-word")
 $chooseLocationBtn = jquery(".choose-location-btn")
-$locationsBox = jquery(".locations-box")
+$schoolsBox = jquery(".schools-box")
+$buildingsBox = jquery(".buildings-box")
 $hotGoodsList = jquery(".hot-goods-list")
 
+vm =
+    buildings: knockout.observableArray([])
+    location: knockout.observable('')
+    overflow: knockout.observable
+
 window.onload = ->
+    intRegex = /^\d+$/
+    vm.location($locationWord.text())
     common.init()
     initChooseLocationBtn()
     initLocations()
-    initAddGoodsToCartBtn()
-    if not common.token
+    initAddGoodsToCartBtn(intRegex)
+    initGoodOperation(intRegex)
+    knockout.applyBindings vm
+    unless common.token
         $chooseLocationBtn.click()
 
 initChooseLocationBtn = ->
     $chooseLocationBtn.click ->
         common.showMask()
-        $locationsBox.show()
+        $schoolsBox.show()
 
 initLocations = ->
-    strategy = 
+    strategy =
         "0": "定位成功"
         "1": "error: 无效的参数"
         "-1": "error: 建筑物不存在"
-    $locationsBox.click (e)->
-        if e.target.className isnt 'location' then return
-        building_name = null # get name
-        building_id = 0 # get building_id
-        common.changeLocation building_id, ->
-            $locationWord.text(building_name)
-            common.hideMask()
-            $locationsBox.hide()
-            common.notify(strategy[data.status])
+    $schoolsBox.click (e)->
+        unless e.target.classList.contains('school') then return
+        school_name = e.target.innerText # get name
+        school_id = e.target.dataset.sid # get building_id
+        common.getBuildings school_id, (res)->
+            $schoolsBox.hide()
+            vm.buildings(res.data)
+            $buildingsBox.show ->
+                $buildingsBox.click (e) ->
+                    unless e.target.classList.contains('building') then return
+                    building_name = e.target.innerText
+                    building_id = e.target.dataset.bid
+                    common.changeLocation building_id, (res) ->
+                        common.hideMask()
+                        $buildingsBox.hide()
+                        vm.location(school_name + building_name)
+                        localStorage.token = res.data._csrf_token
+                        common.notify(strategy[res.code])
 
-
-initAddGoodsToCartBtn = ->
+initAddGoodsToCartBtn = (intRegex) ->
     $hotGoodsList.click (e)->
-        if e.target.className isnt 'add-goods-to-cart-btn' then return
-        good_id = 0
-        amount = 1
-        if amount < 1
-            common.notify("数量要大于0喔！")
-            return 
-        common.addToCart good_id, amount
+        unless e.target.classList.contains('add-goods-to-cart-btn') then return
+        good_id = e.target.dataset.id
+        amount = jquery(e.target).prev().children(":first").val()
+        unless intRegex.test(amount) or amount == 0
+            common.notify("请输入正整数")
+            return
+        amount = Number(amount)
+        common.addToCart good_id, amount, ->
+            common.initHeader()
+            return
+
+initGoodOperation = (intRegex)   ->
+    $hotGoodsList.click (e) ->
+        unless e.target.classList.contains('good-operation') then return
+        counter = jquery(e.target).parent().prev()
+        amount = counter.val()
+        unless intRegex.test(amount)
+            console.log 'not int'
+            common.notify("请输入正整数")
+            return
+        amount = Number(amount)
+        if e.target.classList.contains('good-plus') then amount += 1 else amount -= 1
+        if amount >= 0
+            counter.val(amount)

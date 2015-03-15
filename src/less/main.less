@@ -71,6 +71,9 @@
             font-size: 18px;
             margin-bottom: 15px;
         }
+        .hot-goods-list {
+            overflow: hidden;
+        }
         .hot-good-wrapper {
             width: 193px;
             margin-right: 5px;
@@ -116,6 +119,7 @@
                             float: left;
                             width: 20px;
                             .good-operation {
+                                cursor: pointer;
                                 color: white;
                                 text-align: center;
                                 .vertical-center-font(16px);
@@ -136,7 +140,31 @@
                     }
                     .disabled-btn {
                         background-color: @darkGray;
+                        cursor: auto;
                     }
+                }
+            }
+        }
+    }
+}
+.mask-box-container {
+    .schools-box, .buildings-box {
+        width: 660px;
+        padding: 40px;
+        display: none;
+        .locations-title {
+            color: @orange;
+            font-size: 24px;
+            margin-bottom: 50px;
+        }
+        .locations-container {
+            .location-container {
+                display: inline-block;
+                margin-right: 20px;
+                margin-bottom: 30px;
+                .location-name {
+                    color: #8e8e8e;
+                    font-size: 20px;
                 }
             }
         }

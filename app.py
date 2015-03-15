@@ -3,6 +3,7 @@ import json
 from flask import Flask
 from flask import render_template
 from flask import make_response
+from flask import request
 app = Flask(__name__)
 app.debug = True
 
@@ -10,6 +11,7 @@ user = {
     'location': u'中山大学至善园1号',
     'name': u'张三',
 }
+count = 0
 catx = []
 for i in range(7):
     cat2s = []
@@ -20,7 +22,7 @@ for i in range(7):
     catx.append([{'name': u'一级分类' + str(i)}, cat2s])
 
 hot_goods = []
-for i in range(11):
+for i in range(10):
     quantity = 5
     if i is 0:
         quantity = 0
@@ -79,6 +81,32 @@ def get_cart_objs():
             'price': 99
         })
     return make_response(json.dumps({'code': 0, 'data': cart_objs}))
+
+@app.route('/user/choose_location', methods = ['POST'])
+def get_chosen_location():
+    token = {
+        '_csrf_token': u'token'
+    }
+    return make_response(json.dumps({'code': 0, 'data': token}))
+
+@app.route('/cart/cnt', methods = ['POST'])
+def get_cart_cnt():
+    return make_response(json.dumps({'code': 0, 'data': count}))
+
+@app.route('/<int:school_id>/building_list')
+def get_building_list(school_id):
+    building_list = []
+    for j in range(10):
+        building_list.append({
+            'id': j,
+            'name': str(school_id) + 'building' + str(j)
+        })
+    return make_response(json.dumps({'code': 0, 'data': building_list}))
+
+@app.route('/cart/insert', methods = ['POST'])
+def insert_cart():
+    return make_response(json.dumps({'code': 0}))
+
 
 if __name__ == '__main__':
     app.run()

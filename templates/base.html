@@ -24,7 +24,13 @@
 
     <div id="content">{% block content %}{% endblock %}</div>
 
-    <div class="mask"></div>
+    <div class="mask">
+        <div class="mask-box">
+            <div class="mask-box-wrapper">
+                <div class="mask-box-container">{% block mask %}{% endblock %}</div>
+            </div>
+        </div>
+    </div>
     <div class="notification"></div>
 
     <div id="footer">
