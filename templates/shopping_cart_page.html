@@ -14,55 +14,74 @@
             <span class="top-bar-word">购物车</span>
         </div>
         <div class="right">
-            已选商品：￥<span class="price">0.00</span>
+            已选商品：<span class="price">￥0.00</span>
             <span class="settle-btn btn">结算</span>
         </div>
     </div>
     <div class="goods-list-container">
         <div class="goods-list">
             <div class="goods-list-header">
-                <span><input type="checkbox">全选</span>
-                <span>商品信息</span>
-                <span>单价（元）</span>
-                <span>数量</span>
-                <span>价格（元）</span>
+                <span class="check-all"><input type="checkbox"><label>全选</label></span>
+                <span class="good-info">商品信息</span>
+                <span class="price">单价（元）</span>
+                <span class="quantity">数量</span>
+                <span class="total">价格（元）</span>
             </div>
-            <ul data-bind="foreach: cartObjs">
-                <li>
-                    <span data-bind="ifnot: is_valid">已失效</span>
-                    <span data-bind="if: is_valid, checked: is_checked"><input type="checkbox"></span>
-                    <span><img data-bind="attr: {src: filename}"></span>
-                    <span data-bind="text: name"></span>
-                    <span data-bind="text: price"></span>
-                    <span>
-                        <a class="reduce-btn btn" data-bind="click: $data.reduce">-</a>
-                        <span data-bind="text: quantity"></span>
-                        <a class="add-btn btn" data-bind="click: $data.add">+</a>
-                    </span>
-                    <span data-bind="text: totalPrice"></span>
-                    <span class="remove-btn btn" data-bind="click: $data.removeSelf">删除</span>
-                    <div class="good-mask" data-bind="css: validStatus"></div>
+            <ul class="cart-objs" data-bind="foreach: cartObjs">
+                <li class="cart-obj">
+                    <div class="cart-obj-invalid" data-bind="ifnot: is_valid">已失效</div>
+                    <div class="cart-obj-valid" data-bind="if: is_valid, checked: is_checked"><input type="checkbox"></div>
+                    <img class="cart-obj-pic" data-bind="attr: {src: filename}">
+                    <div class="cart-obj-name" data-bind="text: name"></div>
+                    <div class="cart-obj-price" data-bind="text: price"></div>
+                    <div class="cart-obj-interact">
+                        <div class="reduce-btn btn" data-bind="click: $data.reduce">-</div>
+                        <input data-bind="value: quantity">
+                        <div class="add-btn btn" data-bind="click: $data.add">+</div>
+                    </div>
+                    <div class="cart-obj-total" data-bind="text: totalPrice"></div>
+                    <div class="remove-btn btn" data-bind="click: $data.removeSelf">删除</div>
+                    <!-- <div class="good-mask" data-bind="css: validStatus"></div> -->
                 </li>
             </ul>
             <div class="goods-list-footer">
-                <span><input type="checkbox">全选</span>
-                <span>全部删除</span>
-                <span>清除失效商品</span>
-                <span>已选商品<b>0</b>件</span>
-                <span>合计：￥<b>0</b></span>
+                <span class="check-all"><input type="checkbox"><label>全选</label></span>
+                <span class="delete-goods">删除</span>
+                <span class="delete-invalid">清除失效商品</span>
                 <span class="settle-btn btn">结算</span>
+                <span class="total">合计：<b>￥0</b></span>
+                <span class="check-goods">已选商品<b> 0 </b>件</span>
             </div>
         </div>
     </div>
+</div>
+{% endblock %}
 
-    <div class="contact-info">
-        <form>
-            <p>姓名：<input data-bind="text: contactInfo.name" type="text"></p>
-            <p>联系方式：<input data-bind="text: contactInfo.phone" type="number"></p>
-            <p>地址：<input data-bind="text: contactInfo.addr" type="text"></p>
-        </form>
-        <span class="confirm-btn btn">确认</span>
+{% block mask %}
+<div class="contact-info-confirm">
+    <div class="contact-header">
+        <span class="title">订单信息编辑</span>
+        <span class="confirm-btn btn">确认订单</span>
+        <span class="change-btn btn">修改信息</span>
     </div>
+    <div class="contact-info-detail">
+        <p class="name">姓名：<label data-bind="text: contactInfo.name"></label></p>
+        <p class="phone">手机号：<label data-bind="text: contactInfo.phone"></label></p>
+        <p class="address">地址：<label data-bind="text: contactInfo.addr"></label></p>
+    </div>
+</div>
+
+<div class="contact-info-change">
+    <div class="contact-header">
+        <span class="title">订单信息确认</span>
+        <span class="cancel-btn btn">取消</span>
+        <span class="save-btn btn">保存</span>
+    </div>
+    <form class="contact-info-detail">
+        <p class="name"><label>姓名</label><input data-bind="text: contactInfo.name" type="text"></p>
+        <p class="phone"><label>手机号</label><input data-bind="text: contactInfo.phone" type="number"></p>
+        <p class="address"><label>地址</label><input data-bind="text: contactInfo.addr" type="text"></p>
+    </form>
 </div>
 {% endblock %}
 

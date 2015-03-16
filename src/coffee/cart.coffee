@@ -9,8 +9,13 @@ vm =
         addr: ko.observable("")
 
 $settleBtn = jquery(".settle-btn")
-$contactInfo = jquery(".contact-info")
+$contactInfoConfirm = jquery(".contact-info-confirm")
+$contactInfoChange = jquery(".contact-info-change")
 $confirmBtn = jquery(".confirm-btn")
+$changeBtn = jquery(".change-btn")
+$cancelBtn = jquery(".cancel-btn")
+$saveBtn = jquery(".save-btn")
+$mask = jquery('.mask')
 
 window.onload = ->
     common.init()
@@ -41,8 +46,31 @@ getContactInfo = ->
             bindContactInfo res.data if res.code is 0
 
 initBtns = ->
+    $mask.click (e)->
+        d = e.target
+        while  d != null and d.className != 'mask-box-container'
+            d = d.parentNode
+        unless d != null and d.className == 'mask-box-container'
+            $contactInfoChange.hide()
+            $contactInfoConfirm.hide()
+            common.hideMask()
+
     $settleBtn.click ->
-        $contactInfo.show()
+        common.showMask()
+        $contactInfoConfirm.show()
+
+    $cancelBtn.click ->
+        $contactInfoChange.hide()
+        $contactInfoConfirm.show()
+
+    $saveBtn.click ->
+        $contactInfoChange.hide()
+        $contactInfoConfirm.show()
+
+    $changeBtn.click ->
+        $contactInfoConfirm.hide()
+        $contactInfoChange.show()
+
     $confirmBtn.click ->
         jquery.ajax
             url: common.url + "/order/create"
@@ -69,7 +97,7 @@ injectProperties = (obj)->
         # send delete ajax
         vm.cartObjs.remove @
     obj.add = -> @quantityHandler('/cart/add')
-    obj.reduce = -> @quantityHandler('/cart/sub') 
+    obj.reduce = -> @quantityHandler('/cart/sub')
     obj.quantityHandler = quantityHandler
     obj.totalPrice = ko.pureComputed ->
         @quantity() * @price
@@ -80,7 +108,7 @@ quantityHandler = (suffix)->
         url: common.url + suffix
         type: "POST"
         data:
-            csrf_token: common.token            
+            csrf_token: common.token
             product_id: @product_id
         success: (res)=>
             res = JSON.parse(res)
