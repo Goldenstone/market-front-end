@@ -7,6 +7,7 @@ $chooseLocationBtn = jquery(".choose-location-btn")
 $schoolsBox = jquery(".schools-box")
 $buildingsBox = jquery(".buildings-box")
 $hotGoodsList = jquery(".hot-goods-list")
+$goodCounts = jquery(".good-count")
 
 vm =
     buildings: knockout.observableArray([])
@@ -21,6 +22,7 @@ window.onload = ->
     initLocations()
     initAddGoodsToCartBtn(intRegex)
     initGoodOperation(intRegex)
+    initGoodCountListener()
     knockout.applyBindings vm
     unless common.token
         $chooseLocationBtn.click()
@@ -36,6 +38,7 @@ initLocations = ->
         "1": "error: 无效的参数"
         "-1": "error: 建筑物不存在"
     $schoolsBox.click (e)->
+        console.log 'schoolbox'
         unless e.target.classList.contains('school') then return
         school_name = e.target.innerText # get name
         school_id = e.target.dataset.sid # get building_id
@@ -70,13 +73,28 @@ initAddGoodsToCartBtn = (intRegex) ->
 initGoodOperation = (intRegex)   ->
     $hotGoodsList.click (e) ->
         unless e.target.classList.contains('good-operation') then return
+        console.log 'plus'
         counter = jquery(e.target).parent().prev()
         amount = counter.val()
         unless intRegex.test(amount)
-            console.log 'not int'
             common.notify("请输入正整数")
             return
         amount = Number(amount)
         if e.target.classList.contains('good-plus') then amount += 1 else amount -= 1
         if amount >= 0
             counter.val(amount)
+
+initGoodCountListener = ->
+    jquery.each $goodCounts, (index, goodCount) ->
+        quantity = goodCount.dataset.quantity
+        counter = jquery(goodCount)
+        inventory = counter.parent().prev()
+        counter.keyup ->
+            amount = Number(counter.val())
+            if isNaN(amount) then return
+            if amount > quantity
+                inventory.text("超出库存")
+            else
+                inventory.text("\xa0") # xa0 equal to &nbsp;
+
+

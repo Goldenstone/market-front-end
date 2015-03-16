@@ -51,9 +51,9 @@
                     <img class="good-pic-url" src="{{good[0].pic_url}}">
                     <p class="good-price">￥ {{ good[0].price }}</p>
                     <div class="interact-area">
-                        <div class="insufficient-inventory">超出库存</div>
+                        <div class="insufficient-inventory">&nbsp;</div>
                         <div class="good-count-container">
-                            <input class="good-count" value="1" />
+                            <input class="good-count" value="1" data-quantity="{{ good[2] }}" />
                             <div class="good-plus-minus">
                                 <div class="good-plus good-operation">+</div>
                                 <div class="good-minus good-operation">-</div>

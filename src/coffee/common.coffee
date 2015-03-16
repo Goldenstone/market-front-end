@@ -60,7 +60,7 @@ common =
                 quantity: amount
             success: (res)->
                 res = JSON.parse(res)
-                common.notify(insertStrategy[res.status])
+                common.notify(insertStrategy[res.code])
                 if res.code is 0
                     callback?(res)
 
