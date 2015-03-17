@@ -15,24 +15,25 @@
     </div>
     <div class="nav-banner">
         <div class="nav">
-            <div class="goods-kind-list">
+            <div class="products-kind-list">
                 <div class="all-kind">全部分类</div>
                 <ul class="kinds-container">
                     {% for cat in catx %}
-                    <li>
-                        <div class="kind-container">
+                    <li class="kind-container">
+                        <a href="/product/list?cat1={{ cat[0].id }}">
                             <div class="kind">
                                 {{ cat[0].name }}
                                 <img class="arrow" src="{{ url_for('static', filename='images/enter.png')}}">
                             </div>
-                        </div>
-                        <div class="cat2s">
+                        </a>
+<!--                         <div class="cat2s">
                             <ul>
                                 {% for cat2 in cat[1] %}
                                 <li>{{ cat2.name }}</li>
                                 {% endfor %}
                             </ul>
                         </div>
+ -->
                     </li>
                     {% endfor %}
                 </ul>
@@ -41,26 +42,26 @@
         <div class="banner">
         </div>
     </div>
-    <div class="hot-goods">
+    <div class="hot-products">
         <div><img src="{{ url_for('static', filename='images/hot-products.png')}}">热销商品</div>
-        <ul class="hot-goods-list">
-            {% for good in hot_goods %}
-            <li class="hot-good-wrapper">
-                <div class="hot-good-container">
-                    <p class="good-name">{{ good[0].name }}</p>
-                    <img class="good-pic-url" src="{{good[0].pic_url}}">
-                    <p class="good-price">￥ {{ good[0].price }}</p>
+        <ul class="hot-products-list">
+            {% for product in hot_products %}
+            <li class="hot-product-wrapper">
+                <div class="hot-product-container">
+                    <p class="product-name">{{ product[0].name }}</p>
+                    <img class="product-pic-url" src="{{product[0].pic_url}}">
+                    <p class="product-price">￥ {{ product[0].price }}</p>
                     <div class="interact-area">
                         <div class="insufficient-inventory">&nbsp;</div>
-                        <div class="good-count-container">
-                            <input class="good-count" value="1" data-quantity="{{ good[2] }}" />
-                            <div class="good-plus-minus">
-                                <div class="good-plus good-operation">+</div>
-                                <div class="good-minus good-operation">-</div>
+                        <div class="product-count-container">
+                            <input class="product-count" value="1" data-quantity="{{ product[2] }}" />
+                            <div class="product-plus-minus">
+                                <div class="product-plus product-operation">+</div>
+                                <div class="product-minus product-operation">-</div>
                             </div>
                         </div>
-                        {% if good[2] %}
-                        <div class="add-goods-to-cart-btn btn" data-id="{{ good[0].id }}">加入购物车</div>
+                        {% if product[2] %}
+                        <div class="add-products-to-cart-btn btn" data-id="{{ product[0].id }}">加入购物车</div>
                         {% else %}
                         <div class="disabled-btn btn">已售罄</div>
                         {% endif %}

@@ -1,0 +1,144 @@
+@import "_constants";
+@import "_components";
+
+#content {
+  .container {
+    .top-bar {
+      .top-bar-style;
+    }
+
+    .orders-header {
+        background-color: #f5f5f5;
+        width: 998px;
+        height: 40px;
+        border: solid #e5e5e5 1px;
+        line-height: 40px;
+        margin-top: 19px;
+      .products {
+        margin-left: 210px;
+      }
+
+      .price {
+        margin-left: 259px;
+      }
+
+      .num {
+        margin-left: 68px;
+      }
+
+      .sum {
+        margin-left: 53px;
+      }
+
+      .status {
+        margin-left: 130px;
+      }
+
+    }
+
+    .order-container {
+      width: 965px;
+
+      margin-left: 35px;
+      margin-top: 36px;
+
+      .order-header {
+        width: 967px;
+        height: 39px;
+        background-color: #ffdec1;
+
+        .order-id {
+          margin-top: 15px;
+          margin-left: 18px;
+          line-height: 39px;
+        }
+        .post-man-info {
+          margin-left: 506px;
+        }
+      }
+
+      .item-list {
+        position: relative;
+        border: 1px solid #d2d2d2;
+        border-top: none;
+        .item-container {
+          background-color: #fcfcfc;
+          height: 120px;
+          width: 781px;
+          border-right: 1px solid #d2d2d2;
+          border-bottom: 1px solid #d2d2d2;
+          &:last {
+            border-bottom: none;
+          }
+          img {
+            width: 79px;
+            height: 79px;
+            border: 1px solid #dcdcdc;
+            margin: 20px;
+          }
+          .products-name {
+            position: relative;
+            top: -45px;
+            white-space:normal;
+            width: 267px;
+            margin-left: 27px;
+            margin-top: 43px;
+            display:inline-block;
+          }
+          .product-price {
+            position: relative;
+            top: -45px;
+            margin-left: 60px;
+
+          }
+          .products-quantity {
+            position: relative;
+            top: -45px;
+            margin-left: 118px;
+          }
+          .sum {
+            position: relative;
+            top: -45px;
+            font-weight: bold;
+            color: #ff3e3e;
+            margin-left: 75px;
+          }
+        }
+      }
+      .timer {
+        width: 181px;
+        height: 100%;
+        background-color: #fcfcfc;
+        position: absolute;
+        right: 0;
+        top: 0;
+        text-align: center;
+        line-height: 25px;
+
+        .timer-position {
+
+           position: relative;
+           top: 40%;
+          img {
+            height: 20px;
+            width: 20px;
+          }
+          .text {
+
+          }
+
+          .released_time {
+           color: #ff4302;
+           font-weight: bold;
+           font-size: large;
+          }
+          .password {
+
+          }
+        }
+
+      }
+
+    }
+  }
+}

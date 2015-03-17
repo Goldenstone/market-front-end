@@ -103,7 +103,6 @@ initBtns = ->
                     res = JSON.parse(res)
                     common.notify(settleStrategy[res.code])
 
-
 bindCartObjs = (objs)->
     for obj in objs
         # let necessary property of obj observable

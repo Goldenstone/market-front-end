@@ -21,16 +21,28 @@ common =
             @token = localStorage.token
             common.initHeader()
         # initFooter()
+
     showMask: ->
         $mask.fadeIn()
+
     hideMask: ->
         $mask.fadeOut()
+
     notify: (msg)->
         $notification.text(msg)
         $notification.fadeIn 400, =>
             setTimeout (->
                 $notification.fadeOut()
             ), 1000
+
+    getSchools: (callback) ->
+        jquery.ajax
+            url: common.url + "/location/shcool_list"
+            type: 'GET'
+            success: (res) ->
+                res = JSON.parse(res)
+                if res.code is 0
+                    callback?(res)
 
     getBuildings: (school_id, callback) ->
         jquery.ajax
@@ -40,6 +52,7 @@ common =
                 res = JSON.parse(res)
                 if res.code is 0
                     callback?(res)
+
     changeLocation: (building_id, callback)->
         jquery.ajax
             url: common.url + "/user/choose_location"
@@ -50,6 +63,7 @@ common =
                 res = JSON.parse(res)
                 if res.code is 0
                     callback?(res)
+
     addToCart: (id, amount, callback)->
         jquery.ajax
             url: common.url + "/cart/insert"

@@ -3,68 +3,26 @@
 
 #content {
     .location {
-        img {vertical-align: bottom;}
-        .vertical-center-font(14px);
-        color: #444445;
-        font-size: 14px;
-        margin-bottom: 15px;
-        span.choose-location-btn {
-            color: @orange;
-        }
+        .location-style;
     }
-
     .nav-banner {
         overflow: hidden;
         .nav {
-            overflow: hidden;
-            float: left;
-            .goods-kind-list {
-                width: 245px;
-                margin-right: 12px;
-                float: left;
-                .all-kind, .kind {
-                    .vertical-center-font(40px);
-                }
-                .all-kind {
-                    background-color: @orange;
-                    font-size: 18px;
-                    color: #fff;
-                    padding: 0 14px;
-                }
-                .kinds-container {
-                    .cat2s {display: none}
-                    border: 1px solid #eeeeee;
-                    border-top: 0;
-                    cursor: pointer;
-                    .kind-container {
-                        padding: 0 14px;
-                        background-color: #fafafa;
-                        .kind {
-                            border-bottom: 1px solid #eeeeee;
-                            font-size: 14px;
-                            .arrow {
-                                margin-top: 13px;
-                                float: right;
-                                height: 14px;
-                            }
-                        }
-                        &:hover {
-                            background-color: #f5f5f5;
-                        }
-                    }
-                }
+            .nav-style(245px);
+            .kinds-container {
+                border-bottom: none;
             }
         }
-
         .banner {
+            margin-left: 12px;
             width: 737px;
-            height: 328px;
+            height: 408px;
             background-color: @darkGray;
             float: left;
         }
     }
 
-    .hot-goods {
+    .hot-products {
         margin-top: 20px;
         &>div {
             .vertical-center-font(18px);
@@ -75,83 +33,10 @@
             font-size: 18px;
             margin-bottom: 15px;
         }
-        .hot-goods-list {
-            overflow: hidden;
-        }
-        .hot-good-wrapper {
-            height: 245px;
-            width: 193px;
-            margin-right: 5px;
-            margin-bottom: 5px;
-            text-align: center;
-            border: 1px solid @lightGray;
-            float: left;
-            .hot-good-container {
-                padding: 9px;
-                .good-name {
-                    color: #484848;
-                    text-align: center;
-                    .max-name-width(180px);
-                }
-                .good-pic-url {
-                    width: 174px;
-                    height: 130px;
-                }
-                .good-price {
-                    .vertical-center-font(20px);
-                    color: @darkOrange;
-                }
-                .interact-area {
-                    overflow: hidden;
-                    .insufficient-inventory {
-                        color: @darkOrange;
-                        font-size: 10px;
-                        text-align: right;
-                    }
-                    .good-count-container {
-                        float: left;
-                        border: 1px solid @lightGray;
-                        .good-count {
-                            border: none;
-                            vertical-align: top;
-                            float: left;
-                            text-align: center;
-                            font-size: 15px;
-                            width: 44px;
-                            .vertical-center-font(32px);
-                        }
-                        .good-plus-minus {
-                            float: left;
-                            width: 20px;
-                            .good-operation {
-                                cursor: pointer;
-                                color: white;
-                                text-align: center;
-                                .vertical-center-font(16px);
-                                background-color: @gray;
-                            }
-                        }
-                    }
-                    .btn {
-                        width: @btnWidth;
-                        .vertical-center-font(34px);
-                        float: right;
-                        color: white;
-                        border-radius: 5px;
-                        font-size: 15px;
-                    }
-                    .add-goods-to-cart-btn {
-                        background-color: @orange;
-                    }
-                    .disabled-btn {
-                        background-color: @darkGray;
-                        cursor: auto;
-                    }
-                }
-            }
-        }
+        .product-style;
     }
 }
+
 .mask-box-container {
     .schools-box, .buildings-box {
         width: 660px;

@@ -45,17 +45,17 @@ initLocations = ->
         common.getBuildings school_id, (res)->
             $schoolsBox.hide()
             vm.buildings(res.data)
-            $buildingsBox.show ->
-                $buildingsBox.click (e) ->
-                    unless e.target.classList.contains('building') then return
-                    building_name = e.target.innerText
-                    building_id = e.target.dataset.bid
-                    common.changeLocation building_id, (res) ->
-                        common.hideMask()
-                        $buildingsBox.hide()
-                        vm.location(school_name + building_name)
-                        localStorage.token = res.data._csrf_token
-                        common.notify(strategy[res.code])
+            $buildingsBox.show()
+            $buildingsBox.click (e) ->
+                unless e.target.classList.contains('building') then return
+                building_name = e.target.innerText
+                building_id = e.target.dataset.bid
+                common.changeLocation building_id, (res) ->
+                    common.hideMask()
+                    $buildingsBox.hide()
+                    vm.location(school_name + building_name)
+                    localStorage.token = res.data._csrf_token
+                    common.notify(strategy[res.code])
 
 initAddGoodsToCartBtn = (intRegex) ->
     $hotGoodsList.click (e)->

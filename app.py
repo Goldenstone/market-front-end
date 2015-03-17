@@ -13,20 +13,22 @@ user = {
 }
 count = 0
 catx = []
-for i in range(7):
+for i in range(8):
     cat2s = []
     for j in range(4):
         cat2s.append({
-            'name': u'二级分类' + str(i)
-        })
-    catx.append([{'name': u'一级分类' + str(i)}, cat2s])
+            'name': u'二级分类' + str(i),
+            'id': j
 
-hot_goods = []
+        })
+    catx.append([{'name': u'一级分类' + str(i), 'id': i}, cat2s])
+
+hot_products = []
 for i in range(10):
     quantity = 5
     if i is 0:
         quantity = 0
-    hot_goods.append([{
+    hot_products.append([{
         'name': u'热销商品' + str(i),
         'price': 99,
         # if no pic_url then filename
@@ -53,17 +55,61 @@ def main_page():
             'name': 'school' + str(i)
         }, buildings])
     return render_template('main_page.html', user = user,\
-        catx = catx, hot_goods = hot_goods,\
+        catx = catx, hot_products = hot_products,\
         locations = locations, banners = banners)
+
+@app.route('/product/list')
+def get_list():
+    current_cart = {
+        'name': u'一级分类1',
+        'id': 1
+    }
+    return render_template('goods_list_page.html', user = user, \
+        catx = catx, products = hot_products, current_cart1= current_cart)
+
+@app.route('/order')
+def get_order():
+    orders = {}
+    return render_template('order_page.html', user = user,\
+        orders = orders)
 
 @app.route('/goods_list')
 def goods_list_page():
     return render_template('goods_list_page.html', user = user,\
-        catx = catx, goods_list = hot_goods)
+        catx = catx, goods_list = hot_products)
 
 @app.route('/shopping_cart')
-def shopping_cart_page():
+def shopping_cart():
     return render_template('shopping_cart_page.html', user = user)
+
+@app.route('/order_list')
+def order_list():
+    orders = []
+    for i in range(5):
+        orders.append({
+            'id': i, # 订单id，前端没有用到，还是提供咯
+            'ticketid': u'i', # 订单编号
+            'sender_name': u'和恒', # 送货人名称
+            'sender_contact_info': u'13812312312', # 送货人联系方法，正常就手机号
+            'price': 100, # 订单总价
+            'released_time': u'123123123', # 下单时间。
+            'timedelta': u'123', # 送货时间长度。前端需要用js根据这两个时间计算剩余时间的倒计时
+            'timeout': True, # 是否已超时，是的话，要标记为超时状态。
+            'password': u'123', # 动态密码
+            'status': u'uncompleted', # 订单状态，未完成/完成/关闭
+            'items':
+            [
+                {
+                    'id': 1, # 商品快照id
+                    'filename': u'2', # 用于图片加载
+                    'name': u'商品1', # 商品名称
+                    'description': u'好商品', # 商品描述
+                    'price': 10, # 商品价格
+                    'quantity': 5, # 购买数量
+                }
+            ]
+        })
+    return render_template('orders_list_page.html', user = user, orders = orders)
 
 @app.route('/cart', methods = ['POST'])
 def get_cart_objs():
