@@ -65,7 +65,7 @@ def goods_list_page():
 def shopping_cart_page():
     return render_template('shopping_cart_page.html', user = user)
 
-@app.route('/cart/goods', methods = ['POST'])
+@app.route('/cart', methods = ['POST'])
 def get_cart_objs():
     cart_objs = []
     for i in range(6):
@@ -99,7 +99,7 @@ def get_building_list(school_id):
     for j in range(10):
         building_list.append({
             'id': j,
-            'name': str(school_id) + 'building' + str(j)
+            'name': str(school_id) + u'building' + str(j)
         })
     return make_response(json.dumps({'code': 0, 'data': building_list}))
 
@@ -107,6 +107,14 @@ def get_building_list(school_id):
 def insert_cart():
     return make_response(json.dumps({'code': 0}))
 
+@app.route('/user/contact_info', methods = ['POST'])
+def get_contact_info():
+    contact = {
+        'name': u"张三",
+        'phone': u"1350564335",
+        'addr': u"中山大学明德园2号323中山大学明德园2号323中山大学明德园2号323中山大学明德园2号323中山大学明德园2号323"
+    }
+    return make_response(json.dumps({'code': 0, 'data': contact}))
 
 if __name__ == '__main__':
     app.run()
