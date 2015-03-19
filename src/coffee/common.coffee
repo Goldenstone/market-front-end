@@ -37,7 +37,7 @@ common =
 
     getSchools: (callback) ->
         jquery.ajax
-            url: common.url + "/location/shcool_list"
+            url: common.url + "/location/school_list"
             type: 'GET'
             success: (res) ->
                 res = JSON.parse(res)
@@ -46,7 +46,7 @@ common =
 
     getBuildings: (school_id, callback) ->
         jquery.ajax
-            url: common.url + "/#{school_id}/building_list"
+            url: common.url + "/location/#{school_id}/building_list"
             type: 'GET'
             success: (res) ->
                 res = JSON.parse(res)

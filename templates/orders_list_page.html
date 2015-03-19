@@ -1,12 +1,15 @@
 {% extends "base.html" %}
+
 {% block title %}订单清单{% endblock %}
+
 {% block head %}
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/orders_list.css') }}">
 {% endblock %}
+
 {% block content %}
   <div class="container">
     <div class="top-bar">
-      <div class="left">
+       <div class="left">
           <img src="{{ url_for('static', filename='images/order.png') }}">
           <span class="top-bar-word">订单清单</span>
       </div>
@@ -17,21 +20,22 @@
     </div>
     <div class="orders-header">
       <span class="products">商品</span>
-      <span class="price">单价(元)</span>
+      <span class="price">单价（元）</span>
       <span class="num">数量</span>
-      <span class="sum">价格(元)</span>
+      <span class="sum">价格（元）</span>
       <span class="status">状态</span>
     </div>
     {% for order in orders %}
       <div class="order-container">
-        <div class="order-header">
-          <span class="order-id">{{order.released_time}} 订单号：{{order.id}}</span>
+        <div class="order-header {{order.status}}">
+          <span class="order-time">{{order.released_time}}</span>
+          <span class="order-id">订单号： {{order.id}}</span>
           <span class="post-man-info">送货人：李四 {{order.sender_contact_info}}</span>
         </div>
         <div class="item-list">
           {% for item in order['items'] %}
             <div class="item-container">
-              <img src="{{ item.pic_url }}">
+              <img src="{{ item.filename }}">
               <span class="products-name">{{item.name}}</span>
               <span class="product-price">{{item.price}}</span>
               <span class="products-quantity">{{item.quantity}}</span>
@@ -39,9 +43,11 @@
             </div>
           {% endfor %}
           <div class="timer">
-            <div class="timer-position">
-              <img src="{{ url_for('static', filename='images/time.png') }}">
-              <span class="text"> 送货倒计时 </span>
+            <div class="timer-container">
+              <div class="countdown">
+                <img src="{{ url_for('static', filename='images/time.png') }}">
+                <span class="text"> 送货倒计时 </span>
+              </div>
               <div class="released_time">{{order.timedelta}}</div>
               <div class="password">动态密码{{order.password}}</div>
             </div>

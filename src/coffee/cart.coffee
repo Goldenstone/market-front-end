@@ -163,26 +163,23 @@ getCheckedProductIds = ->
     return productIdsArray.join(',')
 
 vm.deleteCheckedProducts = ->
-    getCheckedProducts().forEach (checked_cart_obj) ->
-        checked_cart_obj.removeSelf()
+    checked_cart_obj.removeSelf() for checked_cart_obj in getCheckedProducts()
+
 
 isCheckedAll = false
 vm.checkAllProducts = ->
     isCheckedAll = !isCheckedAll
-    vm.cartObjs().forEach (cart_obj) ->
-        cart_obj.is_checked(isCheckedAll)
+    cart_obj.is_checked(isCheckedAll) for cart_obj in vm.cartObjs()
 
 vm.deleteInvalidProducts = ->
-    vm.cartObjs().forEach (cart_obj) ->
-        cart_obj.removeSelf() unless cart_obj.is_valid
+    cart_obj.removeSelf() for cart_obj in vm.cartObjs() when cart_obj.is_valid
 
 vm.checkedProductsLength = ko.pureComputed ->
     getCheckedProducts().length
 
 vm.checkedProductsTotal = ko.pureComputed ->
     total = 0
-    getCheckedProducts().forEach (checkedProduct) ->
-        total += checkedProduct.totalPrice()
+    total += checkedProduct.totalPrice() for checkedProduct in getCheckedProducts()
     return "￥" + total
 
 vm.cartObjsLength = ko.pureComputed ->

@@ -16,8 +16,8 @@
                 </div>
             </a>
             <div class="state">
-                <span class="username">{{user.name}}</span>
-                <span class="logout-btn btn">退出</span>
+                <a href="/order_list"><span class="username">{{user.name}}</span></a>
+                <!-- <span class="logout-btn btn">退出</span> -->
                 <span class="separator">|</span>
                 <a href="/shopping_cart" class="entry-cart-btn btn"><img src="{{ url_for('static', filename='images/shopping.png') }}">购物车<b class="amount">{{ 99 }}</b></a>
             </div>

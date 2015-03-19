@@ -1,5 +1,5 @@
 jquery = require("jquery")
-knockout = require("knockout")
+ko = require("knockout")
 common = require("./common.coffee")
 
 $locationWord = jquery(".location-word")
@@ -10,9 +10,9 @@ $hotGoodsList = jquery(".hot-goods-list")
 $goodCounts = jquery(".good-count")
 
 vm =
-    buildings: knockout.observableArray([])
-    location: knockout.observable('')
-    overflow: knockout.observable
+    buildings: ko.observableArray([])
+    location: ko.observable('')
+    overflow: ko.observable
 
 window.onload = ->
     intRegex = /^\d+$/
@@ -23,7 +23,7 @@ window.onload = ->
     initAddGoodsToCartBtn(intRegex)
     initGoodOperation(intRegex)
     initGoodCountListener()
-    knockout.applyBindings vm
+    ko.applyBindings vm
     unless common.token
         $chooseLocationBtn.click()
 
@@ -38,7 +38,6 @@ initLocations = ->
         "1": "error: 无效的参数"
         "-1": "error: 建筑物不存在"
     $schoolsBox.click (e)->
-        console.log 'schoolbox'
         unless e.target.classList.contains('school') then return
         school_name = e.target.innerText # get name
         school_id = e.target.dataset.sid # get building_id

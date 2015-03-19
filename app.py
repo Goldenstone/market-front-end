@@ -32,7 +32,7 @@ for i in range(10):
         'name': u'热销商品' + str(i),
         'price': 99,
         # if no pic_url then filename
-        'pic_url': 'http://www.baidu.com/img/bdlogo.png'
+        'filename': 'http://www.baidu.com/img/bdlogo.png'
     }, 999, quantity])
 
 @app.route('/')
@@ -64,19 +64,39 @@ def get_list():
         'name': u'一级分类1',
         'id': 1
     }
-    return render_template('goods_list_page.html', user = user, \
-        catx = catx, products = hot_products, current_cart1= current_cart)
+    return render_template('products_list_page.html', user = user, \
+        catx = catx, products = hot_products, current_cat1= current_cart)
+
+@app.route('/product/list', methods = ['POST'])
+def post_list():
+    price =  request.form['cat1_id']
+    st = price
+    list_products = []
+    for j in range(10):
+        list_products.append({
+            'id': j,
+            'name': 'product' + str(st),
+            'description': 'heheheheheh',
+            'filename': 'http://www.baidu.com/img/bdlogo.png',
+            'price': price,
+            'quantity': 6,
+            'sold_cnt': 10
+        })
+    current_cart = {
+        'name': u'一级分类1',
+        'id': price
+    }
+    products = {
+        'products': list_products,
+        'current_cat1': current_cart
+    }
+    return make_response(json.dumps({'code': 0, 'data': products}))
 
 @app.route('/order')
 def get_order():
     orders = {}
     return render_template('order_page.html', user = user,\
         orders = orders)
-
-@app.route('/goods_list')
-def goods_list_page():
-    return render_template('goods_list_page.html', user = user,\
-        catx = catx, goods_list = hot_products)
 
 @app.route('/shopping_cart')
 def shopping_cart():
@@ -92,16 +112,32 @@ def order_list():
             'sender_name': u'和恒', # 送货人名称
             'sender_contact_info': u'13812312312', # 送货人联系方法，正常就手机号
             'price': 100, # 订单总价
-            'released_time': u'123123123', # 下单时间。
-            'timedelta': u'123', # 送货时间长度。前端需要用js根据这两个时间计算剩余时间的倒计时
+            'released_time': u'2013-4-11', # 下单时间。
+            'timedelta': u'3天3小时20分', # 送货时间长度。前端需要用js根据这两个时间计算剩余时间的倒计时
             'timeout': True, # 是否已超时，是的话，要标记为超时状态。
-            'password': u'123', # 动态密码
-            'status': u'uncompleted', # 订单状态，未完成/完成/关闭
+            'password': u'1234', # 动态密码
+            'status': u'completed', # 订单状态，未完成/完成/关闭
             'items':
             [
                 {
                     'id': 1, # 商品快照id
-                    'filename': u'2', # 用于图片加载
+                    'filename': u'http://www.baidu.com/img/bdlogo.png', # 用于图片加载
+                    'name': u'商品1商品1商品1商品1商品1商品1商品1商品1商品1商品1商品1商品1商品1商品1商品1商品1商品1商品1商品1商品1商品1商品1商品1商品1商品1', # 商品名称
+                    'description': u'好商品', # 商品描述
+                    'price': 10.0, # 商品价格
+                    'quantity': 5, # 购买数量
+                },
+                {
+                    'id': 2, # 商品快照id
+                    'filename': u'http://www.baidu.com/img/bdlogo.png', # 用于图片加载
+                    'name': u'商品1', # 商品名称
+                    'description': u'好商品', # 商品描述
+                    'price': 10, # 商品价格
+                    'quantity': 5, # 购买数量
+                },
+                {
+                    'id': 3, # 商品快照id
+                    'filename': u'http://www.baidu.com/img/bdlogo.png', # 用于图片加载
                     'name': u'商品1', # 商品名称
                     'description': u'好商品', # 商品描述
                     'price': 10, # 商品价格
@@ -139,7 +175,17 @@ def get_chosen_location():
 def get_cart_cnt():
     return make_response(json.dumps({'code': 0, 'data': count}))
 
-@app.route('/<int:school_id>/building_list')
+@app.route('/location/school_list')
+def get_school_list():
+    school_list = []
+    for j in range(5):
+        school_list.append({
+            'id': j,
+            'name': u'school' + str(j)
+        })
+    return make_response(json.dumps({'code': 0, 'data': school_list}))
+
+@app.route('/location/<int:school_id>/building_list')
 def get_building_list(school_id):
     building_list = []
     for j in range(10):

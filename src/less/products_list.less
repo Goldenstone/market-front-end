@@ -1,6 +1,7 @@
 @import "_constants";
 @import "_components";
 
+@navWidth: 210px;
 
 .location {
     img {vertical-align: bottom;}
@@ -14,10 +15,23 @@
 }
 
 .nav {
-    .nav-style(210px);
+    .nav-style(@navWidth);
+    .cat2s {
+        display: none;
+    }
+    .chosen {
+        .kind {
+            color: #fa9f50;
+        }
+        .cat2s {
+            display: block;
+        }
+    }
 }
 
 .hot-products {
+    float: left;
+    width: 1000px - @navWidth;
     .product-style;
     .hot-products-list {
         padding-left: 10px;
@@ -27,4 +41,8 @@
         margin-right: 0;
         margin-bottom: 34px;
     }
+}
+
+.mask-box-container {
+    .location-box-style;
 }
