@@ -2,8 +2,8 @@ jquery = require("jquery")
 ko = require("knockout")
 common = require("./common.coffee")
 
-$cart1 = jquery(".kind")
-$cart2 = jquery(".cat2")
+$cat1 = jquery(".kind")
+$cat2 = jquery(".cat2")
 $locationWord = jquery(".location-word")
 $chooseLocationBtn = jquery(".choose-location-btn")
 $schoolsBox = jquery(".schools-box")
@@ -15,15 +15,15 @@ vm =
     schools: ko.observableArray([])
     buildings: ko.observableArray([])
     location: ko.observable('')
-    currentCart1Id: ko.observable(0)
+    currentCat1Id: ko.observable(0)
 
 window.onload = ->
     common.init()
     cat1_id = getUrlParameter 'cat1'
     cat2_id = getUrlParameter 'cat2'
     getProducts getData(cat1_id, cat2_id)
-    initCart1Btn()
-    initCart2Btn()
+    initCat1Btn()
+    initCat2Btn()
     vm.location($locationWord.text())
     initChooseLocationBtn()
     initLocations()
@@ -63,7 +63,7 @@ bindBuildings = (school_name, buildings) ->
                 console.log school_name
                 console.log @name
                 vm.location school_name + @name
-                localStorage.token = res.data._csrf_token
+                localStorage.token = res.data.csrf_token
     vm.buildings buildings
 
 getData = (cat1_id, cat2_id) ->
@@ -75,9 +75,11 @@ getData = (cat1_id, cat2_id) ->
         else
             data =
                 cat1_id: cat1_id
-    else
+    else if cat2_id
         data =
             cat2_id: cat2_id
+    else
+        data = {}
 
 getProducts = (data) ->
     jquery.ajax
@@ -88,7 +90,11 @@ getProducts = (data) ->
             res = JSON.parse res
             if res.code is 0
                 bindProducts res.data.products
-                vm.currentCart1Id res.data['current_cat1'].id
+                console.log res.data['current_cat1']
+                if res.data['current_cat1']
+                    vm.currentCat1Id res.data['current_cat1'].id
+                else
+                    vm.currentCat1Id -1
 
 bindProducts = (products) ->
     for product in products
@@ -120,15 +126,15 @@ getUrlParameter = (sParam) ->
         if sParameterName[0] == sParam
             return sParameterName[1]
 
-initCart1Btn = ->
-    $cart1.click (e) ->
+initCat1Btn = ->
+    $cat1.click (e) ->
         cat1 = e.target
         data =
             cat1_id: cat1.dataset.cat1
         getProducts data
 
-initCart2Btn = ->
-    $cart2.click (e) ->
+initCat2Btn = ->
+    $cat2.click (e) ->
         cat2 = e.target
         data =
             cat2_id: cat2.dataset.cat2

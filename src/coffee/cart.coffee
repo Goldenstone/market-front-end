@@ -29,7 +29,7 @@ getCartObjs = ->
         url: common.url + "/cart"
         type: "POST"
         data:
-            _crsf_token: common.token
+            csrf_token: common.token
         success: (res)->
             res = JSON.parse(res)
             if res.code is 0
@@ -94,7 +94,7 @@ initBtns = ->
                 url: common.url + "/order/create"
                 type: "POST"
                 data:
-                    _csrf_token: common.token
+                    csrf_token: common.token
                     product_ids: getCheckedProductIds()
                     name: vm.contactInfo.name()
                     phone: vm.contactInfo.phone()
@@ -107,12 +107,22 @@ bindCartObjs = (objs)->
     for obj in objs
         # let necessary property of obj observable
         obj['is_checked'] = ko.observable(false)
-        obj['quantity'] = ko.observable(obj.quantity)
+        obj.quantity = ko.observable(obj.quantity)
         injectProperties obj
     vm.cartObjs = ko.observableArray(objs)
     ko.applyBindings(vm)
 
 injectProperties = (obj)->
+    obj.setQuantity = ->
+        console.log 'hi'
+        jquery.ajax
+            url: common.url + '/cart/set_quantity'
+            type: "POST"
+            data:
+                csrf_token: common.token
+                product_id: @product_id
+                quantity: @quantity()
+
     obj.validStatus = -> @is_valid ? '' : 'unvalid'
     obj.removeSelf = -> @deleteHandler('/cart/delete')
     obj.add = -> @quantityHandler('/cart/add')
@@ -142,7 +152,7 @@ quantityHandler = (suffix)->
         url: common.url + suffix
         type: "POST"
         data:
-            _csrf_token: common.token
+            csrf_token: common.token
             product_id: @product_id
         success: (res)=>
             res = JSON.parse(res)

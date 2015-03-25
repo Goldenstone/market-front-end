@@ -69,7 +69,8 @@ def get_list():
 
 @app.route('/product/list', methods = ['POST'])
 def post_list():
-    price =  request.form['cat1_id']
+    # price =  request.form['cat1_id']
+    price = 0
     st = price
     list_products = []
     for j in range(10):
@@ -88,7 +89,7 @@ def post_list():
     }
     products = {
         'products': list_products,
-        'current_cat1': current_cart
+        # 'current_cat1': current_cart
     }
     return make_response(json.dumps({'code': 0, 'data': products}))
 

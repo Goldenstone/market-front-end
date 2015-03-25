@@ -37,7 +37,7 @@
                     <div class="cart-obj-price" data-bind="text: price"></div>
                     <div class="cart-obj-interact">
                         <div class="reduce-btn btn" data-bind="click: $data.reduce">-</div>
-                        <input data-bind="value: quantity">
+                        <input data-bind="value: quantity, textInput: quantity, event: {blur: setQuantity}">
                         <div class="add-btn btn" data-bind="click: $data.add">+</div>
                     </div>
                     <div class="cart-obj-total" data-bind="text: formattedPrice()"></div>

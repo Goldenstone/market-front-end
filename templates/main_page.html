@@ -8,11 +8,7 @@
 
 {% block content %}
 <div class="container">
-    <div class="location">
-        <img src="{{ url_for('static', filename='images/address.png')}}" />
-        <span class="location-word" data-bind="text: location">{{ user.location }}</span>
-        <span class="choose-location-btn btn">[切换学校]</span>
-    </div>
+    {% include "_location.html" %}
     <div class="nav-banner">
         <div class="nav">
             <div class="products-kind-list">
@@ -26,14 +22,6 @@
                                 <img class="arrow" src="{{ url_for('static', filename='images/enter.png')}}">
                             </div>
                         </a>
-<!--                         <div class="cat2s">
-                            <ul>
-                                {% for cat2 in cat[1] %}
-                                <li>{{ cat2.name }}</li>
-                                {% endfor %}
-                            </ul>
-                        </div>
- -->
                     </li>
                     {% endfor %}
                 </ul>
@@ -42,63 +30,16 @@
         <div class="banner">
         </div>
     </div>
-    <div class="hot-products">
+    <div class="hot-products" style="display: none" data-bind="visible: true">
         <div><img src="{{ url_for('static', filename='images/hot-products.png')}}">热销商品</div>
-        <ul class="hot-products-list">
-            {% for product in hot_products %}
-            <li class="hot-product-wrapper">
-                <div class="hot-product-container">
-                    <p class="product-name">{{ product[0].name }}</p>
-                    <img class="product-pic-url" src="{{product[0].filename}}">
-                    <p class="product-price">￥ {{ product[0].price }}</p>
-                    <div class="interact-area">
-                        <div class="insufficient-inventory">&nbsp;</div>
-                        <div class="product-count-container">
-                            <input class="product-count" value="1" data-quantity="{{ product[2] }}" />
-                            <div class="product-plus-minus">
-                                <div class="product-plus product-operation">+</div>
-                                <div class="product-minus product-operation">-</div>
-                            </div>
-                        </div>
-                        {% if product[2] %}
-                        <div class="add-products-to-cart-btn btn" data-id="{{ product[0].id }}">加入购物车</div>
-                        {% else %}
-                        <div class="disabled-btn btn">已售罄</div>
-                        {% endif %}
-                    </div>
-                </div>
-            </li>
-            {% endfor %}
-        </ul>
+        {% include "_products.html" %}
     </div>
 </div>
 
 {% endblock %}
 
 {% block mask %}
-<div class="schools-box">
-    <div class="locations-title">
-        请选择您的学校
-    </div>
-    <div class="locations-container">
-        {% for loc in locations %}
-        <div class="location-container">
-            <p class="school location-name" data-sid="{{ loc[0].id }}">{{ loc[0].name }}</p>
-        </div>
-        {% endfor %}
-    </div>
-</div>
-
-<div class="buildings-box">
-    <div class="locations-title">
-        请选择您的宿舍楼
-    </div>
-    <div class="locations-container" data-bind="foreach: buildings">
-        <div class="location-container">
-            <p class="building location-name" data-bind="text: name, click: chooseBuilding"</p>
-        </div>
-    </div>
-</div>
+    {% include "_location_select.html" %}
 {% endblock %}
 
 {% block scripts %}

@@ -8,17 +8,13 @@
 
 {% block content %}
 <div class="container">
-    <div class="location">
-        <img src="{{ url_for('static', filename='images/address.png')}}" />
-        <span class="location-word" data-bind="text: location">{{ user.location }}</span>
-        <span class="choose-location-btn btn">[切换学校]</span>
-    </div>
+    {% include "_location.html" %}
     <div class="nav">
         <div class="products-kind-list">
             <div class="all-kind">全部分类</div>
             <ul class="kinds-container">
                 {% for cat in catx %}
-                <li class="kind-container" data-bind="css: {chosen : currentCart1Id() == {{cat[0].id}}}">
+                <li class="kind-container" data-bind="css: {chosen : currentCat1Id() == {{cat[0].id}}}">
                     <div class="kind" data-cat1="{{cat[0].id}}" >
                         {{ cat[0].name }}
                     </div>
@@ -35,53 +31,13 @@
         </div>
     </div>
     <div class="hot-products" style="display: none" data-bind="visible: true">
-        <ul class="hot-products-list" data-bind="foreach: products">
-            <li class="hot-product-wrapper">
-                <div class="hot-product-container">
-                    <p class="product-name" data-bind="text: name"></p>
-                    <img class="product-pic-url" data-bind="attr: {src: filename}">
-                    <p class="product-price" data-bind="text: formattedPrice"></p>
-                    <div class="interact-area">
-                        <div class="insufficient-inventory" data-bind="text: isOverflow() ? '超出库存' : '&nbsp;'"></div>
-                        <div class="product-count-container">
-                            <input class="product-count" data-bind="value: amount" />
-                            <div class="product-plus-minus">
-                                <div class="product-plus product-operation" data-bind="click: $data.add">+</div>
-                                <div class="product-minus product-operation" data-bind="click: $data.reduce">-</div>
-                            </div>
-                        </div>
-                        <div class="add-products-to-cart-btn btn" data-bind="visible: quantity > 0, click: addToCart">加入购物车</div>
-                        <div class="disabled-btn btn" data-bind="visible: quantity < 1">已售罄</div>
-                    </div>
-                </div>
-            </li>
-        </ul>
+        {% include "_products.html" %}
     </div>
 </div>
 {% endblock %}
 
 {% block mask %}
-<div class="schools-box">
-    <div class="locations-title">
-        请选择您的学校
-    </div>
-    <div class="locations-container" data-bind="foreach: schools">
-        <div class="location-container">
-            <p class="school location-name" data-bind="text: name, click: choose"></p>
-        </div>
-    </div>
-</div>
-
-<div class="buildings-box">
-    <div class="locations-title">
-        请选择您的宿舍楼
-    </div>
-    <div class="locations-container" data-bind="foreach: buildings">
-        <div class="location-container">
-            <p class="building location-name" data-bind="text: name, click: choose"></p>
-        </div>
-    </div>
-</div>
+    {% include "_location_select.html" %}
 {% endblock %}
 
 {% block scripts %}

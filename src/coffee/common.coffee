@@ -70,7 +70,7 @@ common =
             url: common.url + "/cart/insert"
             type: "POST"
             data:
-                _csrf_token: common.token
+                csrf_token: common.token
                 product_id: id
                 quantity: amount
             success: (res)->
@@ -84,12 +84,10 @@ common =
             url: common.url + "/cart/cnt"
             type: "POST"
             data:
-                _csrf_token: common.token
+                csrf_token: common.token
             success: (res)->
                 res = JSON.parse(res)
                 if res.code is 0
                     $cartQuantity.text(res.data)
-
-# initFooter = ->
 
 module.exports = common
