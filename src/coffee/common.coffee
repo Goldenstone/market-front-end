@@ -54,6 +54,7 @@ common =
                     callback?(res)
 
     changeLocation: (building_id, callback)->
+        console.log building_id
         jquery.ajax
             url: common.url + "/user/choose_location"
             type: 'POST'

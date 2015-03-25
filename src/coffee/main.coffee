@@ -33,28 +33,30 @@ initChooseLocationBtn = ->
         $schoolsBox.show()
 
 initLocations = ->
-    strategy =
-        "0": "定位成功"
-        "1": "error: 无效的参数"
-        "-1": "error: 建筑物不存在"
     $schoolsBox.click (e)->
         unless e.target.classList.contains('school') then return
         school_name = e.target.innerText # get name
         school_id = e.target.dataset.sid # get building_id
         common.getBuildings school_id, (res)->
             $schoolsBox.hide()
-            vm.buildings(res.data)
             $buildingsBox.show()
-            $buildingsBox.click (e) ->
-                unless e.target.classList.contains('building') then return
-                building_name = e.target.innerText
-                building_id = e.target.dataset.bid
-                common.changeLocation building_id, (res) ->
-                    common.hideMask()
-                    $buildingsBox.hide()
-                    vm.location(school_name + building_name)
-                    localStorage.token = res.data._csrf_token
-                    common.notify(strategy[res.code])
+            # vm.buildings(res.data)
+            bindBuildings(school_name, res.data)
+
+bindBuildings = (school_name, buildings) ->
+    strategy =
+        "0": "定位成功"
+        "1": "error: 无效的参数"
+        "-1": "error: 建筑物不存在"
+    for building in buildings
+        building.chooseBuilding = ->
+            common.changeLocation @id, (res) =>
+                common.hideMask()
+                $buildingsBox.hide()
+                vm.location(school_name + @name)
+                localStorage.token = res.data._csrf_token
+                common.notify(strategy[res.code])
+    vm.buildings(buildings)
 
 initAddGoodsToCartBtn = (intRegex) ->
     $hotGoodsList.click (e)->
