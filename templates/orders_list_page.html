@@ -43,17 +43,25 @@
             </div>
           {% endfor %}
           <div class="timer">
-            <div class="timer-container">
+            <div class="timer-{{order.status}}">
               <div class="countdown">
                 <img src="{{ url_for('static', filename='images/time.png') }}">
                 <span class="text"> 送货倒计时 </span>
               </div>
               <div class="released_time">{{order.timedelta}}</div>
-              <div class="password">动态密码{{order.password}}</div>
+              <div class="password">动态密码：{{order.password}}</div>
+            </div>
+            <div class="order-{{order.status}}">
+              <div class="received">已送达</div>
+              <div class="password">动态密码：{{order.password}}</div>
             </div>
           </div>
         </div>
       </div>
     {% endfor %}
   </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{url_for('static', filename='js/orders_list.js')}}"></script>
 {% endblock %}

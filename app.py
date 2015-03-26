@@ -117,7 +117,7 @@ def order_list():
             'timedelta': u'3天3小时20分', # 送货时间长度。前端需要用js根据这两个时间计算剩余时间的倒计时
             'timeout': True, # 是否已超时，是的话，要标记为超时状态。
             'password': u'1234', # 动态密码
-            'status': u'completed', # 订单状态，未完成/完成/关闭
+            'status': u'uncompleted', # 订单状态，未完成/完成/关闭
             'items':
             [
                 {
