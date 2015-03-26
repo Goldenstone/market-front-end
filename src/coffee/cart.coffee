@@ -7,6 +7,7 @@ vm =
         name: ko.observable("")
         phone: ko.observable("")
         addr: ko.observable("")
+    is_all_checked: ko.observable(false)
 
 $settleBtn = jquery(".settle-btn")
 $contactInfoConfirm = jquery(".contact-info-confirm")
@@ -52,6 +53,7 @@ initBtns = ->
         while  d != null and d.className != 'mask-box-container'
             d = d.parentNode
         unless d != null and d.className == 'mask-box-container'
+            $cancelBtn.click()
             $contactInfoChange.hide()
             $contactInfoConfirm.hide()
             common.hideMask()
@@ -114,7 +116,13 @@ bindCartObjs = (objs)->
 
 injectProperties = (obj)->
     obj.setQuantity = ->
-        console.log 'hi'
+        quantity = parseInt(@quantity())
+        if quantity and quantity > 0
+            @quantity(quantity)
+        else
+            @quantity(1)
+            common.notify("请输入正整数");
+            return
         jquery.ajax
             url: common.url + '/cart/set_quantity'
             type: "POST"
@@ -156,7 +164,7 @@ quantityHandler = (suffix)->
             product_id: @product_id
         success: (res)=>
             res = JSON.parse(res)
-            @quantity(res.data) if res.code is 0
+            @quantity(res.data) if res.code is 0 and res.data > 0
 
 bindContactInfo = (info)->
     props = ['name', 'phone', 'addr']
@@ -176,10 +184,9 @@ vm.deleteCheckedProducts = ->
     checked_cart_obj.removeSelf() for checked_cart_obj in getCheckedProducts()
 
 
-isCheckedAll = false
 vm.checkAllProducts = ->
-    isCheckedAll = !isCheckedAll
-    cart_obj.is_checked(isCheckedAll) for cart_obj in vm.cartObjs()
+    vm.is_all_checked(!vm.is_all_checked())
+    cart_obj.is_checked(vm.is_all_checked()) for cart_obj in vm.cartObjs()
 
 vm.deleteInvalidProducts = ->
     cart_obj.removeSelf() for cart_obj in vm.cartObjs() when cart_obj.is_valid

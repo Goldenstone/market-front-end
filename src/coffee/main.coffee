@@ -68,6 +68,14 @@ getProducts = ->
 
 bindProducts = (products) ->
     for product in products
+        product.setAmount = ->
+            amount = parseInt(@amount())
+            if amount and amount > 0
+                @amount(amount)
+            else
+                @amount(1)
+                common.notify("请输入正整数");
+
         product.formattedPrice = "￥ " + product.price
         product.amount = ko.observable 1
         product.amountIsNumber = ko.observable true
@@ -75,7 +83,9 @@ bindProducts = (products) ->
             return @amount() > @quantity
         , product
         product.add = -> @amount @amount() + 1
-        product.reduce = -> @amount @amount() - 1
+        product.reduce = ->
+            if @amount() > 1
+                @amount @amount() - 1
         product.addToCart = ->
             common.addToCart @id, @amount(), ->
                 common.initHeader()
@@ -83,5 +93,4 @@ bindProducts = (products) ->
 
     vm.products = ko.observableArray products
     ko.applyBindings vm
-
 

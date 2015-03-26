@@ -7,7 +7,7 @@
             <div class="interact-area">
                 <div class="insufficient-inventory" data-bind="text: isOverflow() ? '超出库存' : '&nbsp;'"></div>
                 <div class="product-count-container">
-                    <input class="product-count" data-bind="value: amount, textInput: amount" />
+                  <input class="product-count" data-bind="value: amount, textInput: amount, event: {blur: setAmount}" />
                     <div class="product-plus-minus">
                         <div class="product-plus product-operation" data-bind="click: $data.add">+</div>
                         <div class="product-minus product-operation" data-bind="click: $data.reduce">-</div>

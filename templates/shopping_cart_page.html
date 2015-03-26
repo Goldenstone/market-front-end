@@ -19,11 +19,11 @@
         </div>
     </div>
     <div class="no-cart-obj" data-bind="style: {display: cartObjsLength() < 1 ? 'block' : 'none'}">您的购物车还是空的，赶紧行动吧！</div>
-    <div class="goods-list-container" data-bind="style: {display: cartObjsLength() > 0 ? 'block' : 'none'}">
-        <div class="goods-list">
-            <div class="goods-list-header">
-                <span class="check-all"><input type="checkbox" data-bind="event: { change: checkAllProducts}"><label>全选</label></span>
-                <span class="good-info">商品信息</span>
+    <div class="products-list-container" data-bind="style: {display: cartObjsLength() > 0 ? 'block' : 'none'}">
+        <div class="products-list">
+            <div class="products-list-header">
+                <span class="check-all"><input type="checkbox" data-bind="event: { change: checkAllProducts}, checked: is_all_checked"><label>全选</label></span>
+                <span class="product-info">商品信息</span>
                 <span class="price">单价（元）</span>
                 <span class="quantity">数量</span>
                 <span class="total">价格（元）</span>
@@ -42,16 +42,16 @@
                     </div>
                     <div class="cart-obj-total" data-bind="text: formattedPrice()"></div>
                     <div class="remove-btn btn" data-bind="click: $data.removeSelf">删除</div>
-                    <!-- <div class="good-mask" data-bind="css: validStatus"></div> -->
+                    <!-- <div class="product-mask" data-bind="css: validStatus"></div> -->
                 </li>
             </ul>
-            <div class="goods-list-footer">
-                <span class="check-all"><input type="checkbox", data-bind="event:{change: checkAllProducts}"><label>全选</label></span>
-                <span class="delete-goods btn" data-bind="click: deleteCheckedProducts">删除</span>
+            <div class="products-list-footer">
+                <span class="check-all"><input type="checkbox", data-bind="event:{change: checkAllProducts}, checked: is_all_checked"><label>全选</label></span>
+                <span class="delete-products btn" data-bind="click: deleteCheckedProducts">删除</span>
                 <span class="delete-invalid btn" data-bind="click: deleteInvalidProducts">清除失效商品</span>
                 <span class="settle-btn btn">结算</span>
                 <span class="total">合计：<b data-bind="text: checkedProductsTotal()"></b></span>
-                <span class="check-goods">已选商品 <b data-bind="text: checkedProductsLength()">0</b> 件</span>
+                <span class="check-products">已选商品 <b data-bind="text: checkedProductsLength()">0</b> 件</span>
             </div>
         </div>
     </div>

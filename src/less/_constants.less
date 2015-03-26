@@ -11,6 +11,18 @@
 @btnWidth: 95px;
 @darkGray: #a1a1a1;
 
+@media (max-width:1000px) {
+    .banner {
+        display: none;
+    }
+    .nav {
+        width: 100%;
+    }
+    .products-kind-list {
+        width: 100% !important;
+    }
+}
+
 * {
     font-family: "Microsoft YaHei" Arial;
     margin: 0;
@@ -68,7 +80,7 @@ a {text-decoration: none;}
 }
 
 .container {
-    width: 1000px;
+    max-width: 1000px;
     overflow: hidden;
     margin: 0 auto;
 }

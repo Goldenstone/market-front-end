@@ -3,6 +3,13 @@
 
 @navWidth: 210px;
 
+@media (max-width: 1000px) {
+    .hot-products {
+        margin-top: 20px;
+        padding-left: 0;
+    }
+}
+
 .location {
     img {vertical-align: bottom;}
     .vertical-center-font(14px);
@@ -31,7 +38,7 @@
 
 .hot-products {
     float: left;
-    width: 1000px - @navWidth;
+    max-width: 1000px - @navWidth;
     .product-style;
     .hot-products-list {
         padding-left: 10px;
