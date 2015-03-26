@@ -13,7 +13,7 @@
                         <div class="product-minus product-operation" data-bind="click: $data.reduce">-</div>
                     </div>
                 </div>
-                <div class="add-products-to-cart-btn btn" data-bind="visible: quantity > 0, click: addToCart">加入购物车</div>
+                <div class="add-products-to-cart-btn btn" data-bind="visible: quantity > 0, click: addToCart, css: {disabled: isOverflow()}">加入购物车</div>
                 <div class="disabled-btn btn" data-bind="visible: quantity < 1">已售罄</div>
             </div>
         </div>
