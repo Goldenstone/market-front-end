@@ -2,6 +2,7 @@
 
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/vendors/slick.css')  }}">
 {% endblock %}
 
 {% block title %}主页{% endblock %}
@@ -28,6 +29,9 @@
             </div>
         </div>
         <div class="banner">
+          {% for banner in banners %}
+          <div><img src="{{banner.pic_url}}" alt="" /></div>
+          {% endfor %}
         </div>
     </div>
     <div class="hot-products" style="display: none" data-bind="visible: true">
@@ -43,5 +47,16 @@
 {% endblock %}
 
 {% block scripts %}
+<script src="{{ url_for('static', filename='js/lib/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lib/slick.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script>
+     $(document).ready(function(){
+         $('.banner').slick({
+             autoplay: true,
+             dots: true,
+             arrows: false
+         });
+     });
+</script>
 {% endblock %}

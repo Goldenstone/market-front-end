@@ -1,4 +1,7 @@
 node_modules
-static
+static/css/*
+static/js/*
+!/static/css/vendors
+!/static/js/lib
 design
 dist

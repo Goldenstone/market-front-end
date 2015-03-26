@@ -14,11 +14,49 @@
             }
         }
         .banner {
-            margin-left: 12px;
             width: 737px;
             height: 408px;
+            margin-left: 12px;
             background-color: @darkGray;
             float: left;
+            img {
+                width: 737px;
+                height: 408px;
+            }
+            .slick-dots {
+                position: absolute;
+                bottom: 30px;
+                right: 47px;
+                width: auto;
+                list-style: none;
+                text-align: center;
+                li {
+                    position: relative;
+                    display: inline-block;
+                    margin: 0 4px;
+                    height: 25px;
+                    width: 25px;
+                    border-radius: 50%;
+                    background-color: #aaaaaa;
+                    button {
+                        height: 25px;
+                        width: 25px;
+                        border-radius: 50%;
+                        font-size: 16px;
+                        color: #fff;
+                        line-height: 25px;
+                        background-color: transparent;
+                        border: none;
+                        cursor: pointer;
+                       &:focus {
+                            outline: none;
+                        }
+                    }
+                }
+                .slick-active {
+                    background-color: #fa9f50;
+                }
+            }
         }
     }
 
