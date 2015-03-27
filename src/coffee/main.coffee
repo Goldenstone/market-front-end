@@ -26,7 +26,6 @@ window.onload = ->
 initChooseLocationBtn = ->
     $chooseLocationBtn.click ->
         common.showMask()
-        console.log $schoolsBox
         $schoolsBox.show()
 
 initLocation = ->

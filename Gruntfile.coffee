@@ -7,7 +7,7 @@ module.exports = (grunt) ->
     grunt.initConfig
         clean:
             bin:
-                src: ["static/css", "static/js"]
+                src: ["static/css/*.css", "static/js/*.js"]
             dist: ["dist"]
 
         watch:

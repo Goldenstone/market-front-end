@@ -107,14 +107,18 @@ def shopping_cart():
 def order_list():
     orders = []
     for i in range(5):
+        if i == 1:
+            timedelta = 35555550
+        else:
+            timedelta = 36000000
         orders.append({
             'id': i, # 订单id，前端没有用到，还是提供咯
             'ticketid': u'i', # 订单编号
             'sender_name': u'和恒', # 送货人名称
             'sender_contact_info': u'13812312312', # 送货人联系方法，正常就手机号
             'price': 100, # 订单总价
-            'released_time': u'2013-4-11', # 下单时间。
-            'timedelta': u'3天3小时20分', # 送货时间长度。前端需要用js根据这两个时间计算剩余时间的倒计时
+            'released_time': 1427426384292, # 下单时间。
+            'timedelta': timedelta, # 送货时间长度。前端需要用js根据这两个时间计算剩余时间的倒计时
             'timeout': True, # 是否已超时，是的话，要标记为超时状态。
             'password': u'1234', # 动态密码
             'status': u'uncompleted', # 订单状态，未完成/完成/关闭

@@ -48,7 +48,7 @@
                 <img src="{{ url_for('static', filename='images/time.png') }}">
                 <span class="text"> 送货倒计时 </span>
               </div>
-              <div class="released_time">{{order.timedelta}}</div>
+              <div class="counter" data-release={{order.released_time}} data-timedelta="{{order.timedelta}}"></div>
               <div class="password">动态密码：{{order.password}}</div>
             </div>
             <div class="order-{{order.status}}">
